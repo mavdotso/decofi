@@ -1,0 +1,7 @@
+.logo {
+    height: 3em;
+}
+
+.logo-dark {
+    filter: invert(8%) sepia(8%) saturate(511%) hue-rotate(182deg) brightness(102%) contrast(87%);
+}

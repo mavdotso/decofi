@@ -1,0 +1,115 @@
+.donation_box {
+    font-weight: 600;
+    background-color: var(--light-primary);
+    border: 0.15em solid var(--dark-primary);
+    border-radius: var(--card-border-radius);
+    box-shadow: -0.45em 0.45em 0 0 var(--dark-primary);
+    padding: 1.5em 1.8em;
+    width: min(28.125em, 25em);
+}
+
+.donation_box_header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 1.5em;
+}
+
+.donation_box_header h4 {
+    font-size: 1.5em;
+    margin: 1em 0 1em 1em;
+}
+
+.donation_box_image {
+    max-width: 4em;
+    border-radius: 100em;
+}
+
+.donation_box_choose_donation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.donation_coffee_emoji {
+    font-size: 2em;
+}
+
+.donation_radio:last-child {
+    text-align: center;
+    height: 3em;
+    width: 3em;
+    border: 0.15em solid var(--dark-primary);
+    border-radius: 2em;
+    box-shadow: -0.1em 0.1em 0 0 var(--dark-primary);
+    appearance: inherit;
+}
+
+.donation_holder {
+    display: table;
+}
+
+.donation_holder label {
+    margin: auto;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    height: 3em;
+    width: 3em;
+    border: 0.15em solid var(--dark-primary);
+    border-radius: 2em;
+    box-shadow: -0.1em 0.1em 0 0 var(--dark-primary);
+}
+
+.donation_active {
+    background-color: var(--dark-primary);
+    color: var(--light-primary);
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked + label {
+    background-color: var(--dark-primary);
+    color: var(--light-primary);
+}
+
+.donation_holder input:not([value=""]) {
+    background-color: var(--dark-primary);
+    color: var(--light-primary);
+}
+
+.donation_radio:last-child:focus {
+    background-color: var(--dark-primary);
+    color: var(--light-primary);
+}
+
+.donation_box_message {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.donation_field {
+    background-color: var(--light-primary);
+    border: 0.15em solid var(--dark-primary);
+    border-radius: 0.5em;
+    box-shadow: -0.15em 0.15em 0 0 var(--dark-primary);
+    margin: 0.5em 0;
+    padding: 1em 0.5em;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+textarea {
+    resize: none;
+}

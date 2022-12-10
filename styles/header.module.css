@@ -1,0 +1,28 @@
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2em 5em;
+    flex-wrap: wrap;
+}
+
+.menu_item {
+    margin-right: 3em;
+    font-weight: 600;
+    color: var(--dark-secondary);
+    border-bottom: solid 3px transparent;
+}
+
+.menu_item:hover {
+    color: var(--dark-primary);
+    border-bottom: solid 3px var(--dark-primary);
+    transition: all ease-in-out 0.3s;
+}
+
+@media (max-width: 50em) {
+    .menu {
+        margin: 1.5em 1em;
+        justify-content: center;
+        row-gap: 2em;
+    }
+}

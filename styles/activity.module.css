@@ -1,0 +1,16 @@
+.user_activity {
+    align-self: start;
+}
+
+.user_activity h3 {
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 1rem;
+    color: #6d7078;
+}
+
+@media (max-width: 50em) {
+    .user_activity {
+        display: none;
+    } 
+}

@@ -1,0 +1,15 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3em;
+}
+
+.footer_icon {
+    color: var(--dark-primary);
+    margin: 1em;
+}
+
+.footer .logo {
+    height: 2em;
+}

@@ -1,0 +1,28 @@
+.button {
+    font-weight: 800;
+    border: none;
+    border-radius: 0.5em;
+    transition: all ease-in-out 0.3s;
+}
+
+.button_primary {
+    background-color: var(--dark-primary);
+    color: var(--light-primary);
+    box-shadow: -0.3em 0.3em 0 -0.15em var(--light-primary), -0.3em 0.3em 0 0 var(--dark-primary);
+}
+
+.button_large {
+    font-size: 1.25em;
+    padding: 1.2em 1.8em;
+}
+
+.button_small {
+    font-size: 1em;
+    padding: 1em 1.5em;
+}
+
+.button_primary:hover {
+    box-shadow: none;
+    background-color: var(--dark-secondary);
+    cursor: pointer;
+}

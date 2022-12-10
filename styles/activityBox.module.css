@@ -1,0 +1,28 @@
+.activity_donation {
+    font-weight: 600;
+    background-color: var(--light-primary);
+    border: 0.15em solid var(--dark-primary);
+    border-radius: 0.5em;
+    box-shadow: -0.3em 0.3em 0 0 var(--dark-primary);
+    padding: 0 1.8em;
+    margin-top: 1em;
+}
+
+.donation_message {
+    padding: 1.2em 1.8em;
+    font-style: italic;
+    background-color: #fff;
+    border-radius: 0.5em;
+}
+
+.activity_donation_from,
+.activity_donation_amount {
+    font-weight: 600;
+}
+
+.activity_donation_message {
+    font-style: italic;
+    background-color: #fff;
+    width: 100%;
+    padding: 0.3em;
+}
