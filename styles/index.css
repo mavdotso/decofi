@@ -102,6 +102,20 @@ input:focus,
     color: var(--placeholder-color);
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+textarea {
+    resize: none;
+}
+
 .claim-username-form .input-box {
     margin-right: 1em;
 }

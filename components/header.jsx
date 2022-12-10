@@ -15,8 +15,6 @@ function Header() {
     const session = useSession();
     const supabaseClient = useSupabaseClient();
 
-    console.log("Session: ", session);
-
     const [isActiveWallet, setActiveWallet] = useState();
 
     useEffect(() => {

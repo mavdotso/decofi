@@ -3,15 +3,12 @@ import { useState, useContext } from "react";
 import checkIfActiveAccount, { sendDonation, connectWallet, WalletContext } from "../lib/wallet";
 import { submitDonation } from "../lib/supabase";
 
+import styles from "../styles/DonateBox.module.css";
 
-import styles from "./DonateBox.module.css"
-
-import Button from "./Button";
-import buttonStyles from "./Button.module.css"
+import Button from "./button";
+import buttonStyles from "../styles/button.module.css";
 
 import UserAvatar from "./userAvatar";
-import userAvatarStyles from "./Button.module.css"
-
 
 export default function DonateBox({ username, id, tezosWalletAddress, image }) {
     const wallet = useContext(WalletContext);
@@ -64,20 +61,20 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
     }
 
     return (
-        <div className={ styles.donation_box }>
-            <span className={ styles.donation_box_header }>
-                <UserAvatar className={ styles.donation_box_image } username={username} image={image} />
+        <div className={styles.donation_box}>
+            <span className={styles.donation_box_header}>
+                <UserAvatar className={styles.donation_box_image} username={username} image={image} />
                 <h4>
-                    Buy <span className={ styles.donation_box_name }>{username}</span> a coffee
+                    Buy <span className={styles.donation_box_name}>{username}</span> a coffee
                 </h4>
             </span>
 
-            <form className={ styles.donate_form } onSubmit={processDonation}>
-                <div className={ styles.donation_box_choose_donation }>
-                    <span className={ styles.donation_coffee_emoji } > ☕️ </span>
+            <form className={styles.donate_form} onSubmit={processDonation}>
+                <div className={styles.donation_box_choose_donation}>
+                    <span className={styles.donation_coffee_emoji}> ☕️ </span>
                     <span> x </span>
 
-                    <span className={ styles.donation_holder }>
+                    <span className={styles.donation_holder}>
                         <input
                             onClick={calculateAmount}
                             onChange={(e) => {
@@ -85,7 +82,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
                                 setInputValue("");
                             }}
                             name="donation-size"
-                            className={ styles.donation_radio }
+                            className={styles.donation_radio}
                             id="donation-3"
                             type="radio"
                             checked={radioValue === "3"}
@@ -93,7 +90,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
                         ></input>
                         <label htmlFor="donation-3">3</label>
                     </span>
-                    <span className={ styles.donation_holder }>
+                    <span className={styles.donation_holder}>
                         <input
                             onClick={calculateAmount}
                             onChange={(e) => {
@@ -101,7 +98,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
                                 setInputValue("");
                             }}
                             name="donation-size"
-                            className={ styles.donation_radio }
+                            className={styles.donation_radio}
                             id="donation-5"
                             type="radio"
                             checked={radioValue === "5"}
@@ -109,7 +106,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
                         ></input>
                         <label htmlFor="donation-5">5</label>
                     </span>
-                    <span className={ styles.donation_holder }>
+                    <span className={styles.donation_holder}>
                         <input
                             onClick={calculateAmount}
                             onChange={(e) => {
@@ -117,7 +114,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
                                 setInputValue("");
                             }}
                             name="donation-size"
-                            className={ styles.donation_radio }
+                            className={styles.donation_radio}
                             id="donation-10"
                             type="radio"
                             checked={radioValue === "10"}
@@ -126,14 +123,14 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
                         <label htmlFor="donation-10">10</label>
                     </span>
 
-                    <span className={ styles.donation_holder }>
-                        <input onChange={calculateAmount} name="donation-size-custom" className={ styles.donation_radio} id="donation-custom" type="number" placeholder="25" value={inputValue}></input>
+                    <span className={styles.donation_holder}>
+                        <input onChange={calculateAmount} name="donation-size-custom" className={styles.donation_radio} id="donation-custom" type="number" placeholder="25" value={inputValue}></input>
                     </span>
                 </div>
-                <div className={ styles.donation_box_message }>
-                    <input className={ styles.donation_field } type="text" id="from" name="from" onChange={handleChangeFrom} placeholder="From (optional)" value={from} />
+                <div className={styles.donation_box_message}>
+                    <input className={styles.donation_field} type="text" id="from" name="from" onChange={handleChangeFrom} placeholder="From (optional)" value={from} />
                     <textarea
-                        className={ styles.donation_field }
+                        className={styles.donation_field}
                         type="textarea"
                         id="message"
                         name="message"
@@ -142,8 +139,11 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
                         rows="4"
                         placeholder="Your message (optional)"
                     ></textarea>
-                    {isInvalid && <p className={ styles.input_invalid }> Choose the donation amount </p>}
-                    <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText={amount > 0 ? "Buy a coffee! ꜩ " + amount : "Buy a coffee!"} />
+                    {isInvalid && <p className={styles.input_invalid}> Choose the donation amount </p>}
+                    <Button
+                        className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`}
+                        buttonText={amount > 0 ? "Buy a coffee! ꜩ " + amount : "Buy a coffee!"}
+                    />
                 </div>
             </form>
         </div>

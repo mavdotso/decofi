@@ -1,59 +1,55 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import Activity from "./components/Activity";
-import DonateBox from "./components/DonateBox";
-import supabase from "./lib/supabase.js";
-import UserAvatar from "./components/UserAvatar";
-import { SUPABASE_DB_NAME_USERS } from "./lib/consts";
 
-export default function User() {
-    const params = useParams();
-    const navigate = useNavigate();
+import Activity from "../components/activity";
+import DonateBox from "../components/donateBox";
+import UserAvatar from "../components/userAvatar";
 
-    const [username, setUsername] = useState();
-    const [userID, setUserID] = useState();
-    const [description, setDescription] = useState();
-    const [tezosWalletAddress, setTezosWalletAddress] = useState();
-    const [image, setImage] = useState("");
+import supabase from "../lib/supabase.js";
+import { SUPABASE_DB_NAME_USERS } from "../lib/consts";
 
-    useEffect(() => {
-        const findUser = async () => {
-            const { data, error } = await supabase.from(SUPABASE_DB_NAME_USERS).select().eq("username", params.username).single();
-
-            if (error) {
-                navigate("../", { replace: true });
-            }
-
-            if (data) {
-                setUsername(data.username);
-                setUserID(data.id);
-                setDescription(data.description);
-                setTezosWalletAddress(data.tezos_wallet);
-                setImage(data.image);
-            }
-        };
-        findUser();
-    }, [params, navigate]);
-
+export default function User({ user }) {
     return (
         <>
             <div className="full-width">
                 <section className="container flow user-info">
                     <div className="user-picture-holder">
-                        <UserAvatar className="user-picture" username={username} image={`${username}-${image}`} />
+                        <UserAvatar className="user-picture" username={user.username} image={`${user.username}-${user.image}`} />
                     </div>
-
                     <div className="user-description">
-                        <h1>{username}</h1>
-                        <p>{description}</p>
+                        <h1>{user.username}</h1>
+                        <p>{user.description}</p>
                     </div>
                 </section>
             </div>
 
             <section className="container even-columns">
-                <Activity id={userID} />
-                <DonateBox username={username} id={userID} tezosWalletAddress={tezosWalletAddress} image={`${username}-${image}`} />
+                <Activity id={user.id} />
+                <DonateBox username={user.username} id={user.id} tezosWalletAddress={user.tezos_wallet} image={`${user.username}-${user.image}`} />
             </section>
         </>
     );
+}
+
+export async function getStaticPaths() {
+    const { data, error } = await supabase.from(SUPABASE_DB_NAME_USERS).select("*");
+    const paths = data.map((user) => {
+        return {
+            params: { username: user.username.toString() },
+        };
+    });
+
+    return {
+        paths: paths,
+        fallback: false,
+    };
+}
+
+// `getStaticPaths` requires using `getStaticProps`
+export async function getStaticProps(context) {
+    const { params } = context;
+    const { data, error } = await supabase.from(SUPABASE_DB_NAME_USERS).select().eq("username", params.username).single();
+
+    return {
+        props: { user: data },
+    };
 }
