@@ -23,7 +23,7 @@ export default function Account({ session }) {
         try {
             setLoading(true);
 
-            let { data, error, status } = await supabase.from("users").select().eq("id", user.id).single();
+            let { data, error, status } = await supabase.from(SUPABASE_DB_NAME_USERS).select().eq("id", user.id).single();
 
             if (error && status !== 406) {
                 throw error;
@@ -51,17 +51,17 @@ export default function Account({ session }) {
                 id: user.id,
                 username,
                 email,
-                tezosWallet,
-                twitterAccount,
+                tezos_wallet: tezosWallet,
+                twitter_account: twitterAccount,
                 description,
                 updated_at: new Date().toISOString(),
             };
 
-            let { error } = await supabase.from("profiles").upsert(updates);
+            let { error } = await supabase.from(SUPABASE_DB_NAME_USERS).upsert(updates);
             if (error) throw error;
-            alert("Profile updated!");
+            console.log("Profile updated!");
         } catch (error) {
-            alert("Error updating the data!");
+            console.log("Error updating the data!");
             console.log(error);
         } finally {
             setLoading(false);

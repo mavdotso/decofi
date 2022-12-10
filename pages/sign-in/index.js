@@ -12,6 +12,7 @@ export default function SignIn() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loginError, setLoginError] = useState(false);
 
     function handleEmail(e) {
         setEmail(e.target.value);
@@ -23,8 +24,13 @@ export default function SignIn() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        await signIn(email, password);
-        router.push({ pathname: "/account" } );
+        const res = await signIn(email, password);
+
+        if(res.session === null) {
+            setLoginError(true);
+        } else {
+            router.push({ pathname: "/account" } );
+        }
     }
 
     return (
@@ -41,6 +47,7 @@ export default function SignIn() {
                         <div className="input-box">
                             <input name="password" value={password} placeholder="Password" onChange={handlePassword}></input>
                         </div>
+                            { loginError ? <span className="input-tip input-invalid">Login error! Please, try again.</span> : ''}
                             <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Sign in" />
                         <p>
                             Don't have a creator account?{" "}

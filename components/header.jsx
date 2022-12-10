@@ -5,12 +5,15 @@ import buttonStyles from "../styles/button.module.css";
 
 import { useState, useEffect, useContext } from "react";
 import checkIfActiveAccount, { connectWallet, disconnectWallet, WalletContext } from "../lib/wallet";
+import { getUser, signOut } from "../lib/supabase";
 
 import Link from "next/link";
 
-function Header() {
-    const [isActiveWallet, setActiveWallet] = useState();
+function Header({ session }) {
     const wallet = useContext(WalletContext);
+
+    const [isActiveWallet, setActiveWallet] = useState();
+    const [isActiveUser, setActiveUser] = useState(false);
 
     useEffect(() => {
         const checkActiveAccount = async () => {
@@ -19,6 +22,20 @@ function Header() {
         };
         checkActiveAccount();
     }, [wallet]);
+
+    useEffect(() => {
+        const checkIfActiveUser = async () => {
+            const user = await getUser();
+
+            if(user) {
+                setActiveUser(true);
+                console.log("User:", user);
+            } 
+        };
+        checkIfActiveUser();
+    }, [session]);
+
+    console.log("Session", session);
 
     async function handleClick(e) {
         e.preventDefault();
@@ -44,12 +61,26 @@ function Header() {
                     <Logo className={styles.logo} />
                 </Link>
                 <div className={styles.menu_buttons}>
-                    <Link className={styles.menu_item} href="/sign-in">
-                        Sign in
-                    </Link>
-                    <Link className={styles.menu_item} href={{pathname: '/sign-up', query: { username: '' }}} as="/sign-up">
-                        Sign up
-                    </Link>
+                    {isActiveUser ? (
+                        <>
+                            <Link className={styles.menu_item} href="/account">
+                                Account
+                            </Link>
+                            <Link className={styles.menu_item} href="" onClick={signOut}>
+                                Sign out
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link className={styles.menu_item} href="/sign-in">
+                                Sign in
+                            </Link>
+                            <Link className={styles.menu_item} href={{ pathname: "/sign-up", query: { username: "" } }} as="/sign-up">
+                                Sign up
+                            </Link>
+                        </>
+                    )}
+                    ;
                     {isActiveWallet ? (
                         <Button
                             onClick={handleClick}
