@@ -1,4 +1,6 @@
 import Button from "../components/button";
+import DonateBox from "../components/donateBox";
+import Layout from "../components/Layout/layout";
 
 import buttonStyles from "../styles/button.module.css";
 
@@ -20,7 +22,7 @@ export default function Home() {
     }
 
     return (
-        <>
+        <Layout>
             <main>
                 <section className="container flow section-hero centered">
                     <h1>
@@ -87,10 +89,10 @@ export default function Home() {
                                 Setup your account, connect your wallet and begin getting payouts in less than 3 minutes.
                             </p>
                         </div>
-                        {/* <DonateBox username="mav" id="38c71ccf-4d75-4a53-af24-65dae701f174" tezosWalletAddress="tz1VgoYJYn8WCrzSiJzU8akNexYkZxuZghAH" image="mav-mav.jpeg" /> */}
+                        <DonateBox username="mav" id="38c71ccf-4d75-4a53-af24-65dae701f174" tezosWalletAddress="tz1VgoYJYn8WCrzSiJzU8akNexYkZxuZghAH" image="mav-mav.jpeg" />
                     </section>
                 </div>
             </main>
-        </>
+        </Layout>
     );
 }

@@ -4,6 +4,7 @@ import { useSession } from '@supabase/auth-helpers-react'
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
+import Layout from "../../components/Layout/layout";
 
 export default function Account() {
 
@@ -31,7 +32,7 @@ export default function Account() {
     }, [session]);
 
     return (
-        <>      
+        <Layout>      
             <div className="container">
                 <section className="centered create-account">
                     <h2>Welcome back, { username }</h2>
@@ -61,6 +62,6 @@ export default function Account() {
                     </form>
                 </section>
             </div>
-        </>
+        </Layout>
     );
 }

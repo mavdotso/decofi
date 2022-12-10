@@ -6,6 +6,7 @@ import buttonStyles from "../styles/button.module.css";
 import { useState, useEffect, useContext } from "react";
 import checkIfActiveAccount, { connectWallet, disconnectWallet, WalletContext } from "../lib/wallet";
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { signOut } from "../lib/supabase"
 
 import Link from "next/link";
 
@@ -54,7 +55,7 @@ function Header() {
                             <Link className={styles.menu_item} href="/account">
                                 Account
                             </Link>
-                            <Link className={styles.menu_item} href="" onClick={() => supabaseClient.auth.signOut()}>
+                            <Link className={styles.menu_item} href="" onClick={signOut}>
                                 Sign out
                             </Link>
                         </>

@@ -5,6 +5,7 @@ import supabase, { signUp } from "../../lib/supabase";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
+import Layout from "../../components/Layout/layout";
 
 export default function SignUp() {
     const router = useRouter();
@@ -89,7 +90,7 @@ export default function SignUp() {
     }
 
     return (
-        <>
+        <Layout>
             <div className="container">
                 <section className="centered create-account">
                     <h2>Create your account</h2>
@@ -139,6 +140,6 @@ export default function SignUp() {
                     </form>
                 </section>
             </div>
-        </>
+        </Layout>
     );
 }

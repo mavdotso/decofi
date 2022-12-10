@@ -66,15 +66,6 @@
     color: var(--light-primary);
 }
 
-.donation_radio {
-    display: none;
-}
-
-.donation_radio:checked + label {
-    background-color: var(--dark-primary);
-    color: var(--light-primary);
-}
-
 .donation_holder input:not([value=""]) {
     background-color: var(--dark-primary);
     color: var(--light-primary);

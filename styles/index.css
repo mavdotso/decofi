@@ -102,6 +102,15 @@ input:focus,
     color: var(--placeholder-color);
 }
 
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"]:checked + label {
+    background-color: var(--dark-primary);
+    color: var(--light-primary);
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -110,6 +119,10 @@ input::-webkit-inner-spin-button {
 
 input[type="number"] {
     -moz-appearance: textfield;
+}
+
+textarea {
+    resize: none;
 }
 
 textarea {

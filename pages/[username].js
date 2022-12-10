@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
-
 import Activity from "../components/activity";
 import DonateBox from "../components/donateBox";
 import UserAvatar from "../components/userAvatar";
+import Layout from "../components/Layout/layout";
 
 import supabase from "../lib/supabase.js";
 import { SUPABASE_DB_NAME_USERS } from "../lib/consts";
 
 export default function User({ user }) {
     return (
-        <>
+        <Layout>
             <div className="full-width">
                 <section className="container flow user-info">
                     <div className="user-picture-holder">
@@ -26,7 +25,7 @@ export default function User({ user }) {
                 <Activity id={user.id} />
                 <DonateBox username={user.username} id={user.id} tezosWalletAddress={user.tezos_wallet} image={`${user.username}-${user.image}`} />
             </section>
-        </>
+        </Layout>
     );
 }
 

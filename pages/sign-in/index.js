@@ -5,6 +5,7 @@ import { signIn } from "../../lib/supabase";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
+import Layout from "../../components/Layout/layout";
 
 export default function SignIn() {
 
@@ -34,7 +35,7 @@ export default function SignIn() {
     }
 
     return (
-        <>
+        <Layout>
             <div className="container">
                 <section className="centered create-account">
                     <h2>Sign In</h2>
@@ -58,6 +59,6 @@ export default function SignIn() {
                     </form>
                 </section>
             </div>
-        </>
+        </Layout>
     );
 }

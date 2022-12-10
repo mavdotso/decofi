@@ -5,6 +5,7 @@ import convertToSlug from "./lib/utils";
 
 import Button from "./components/Button";
 import buttonStyles from "./components/Button.module.css";
+import Layout from "../components/Layout/layout";
 
 export default function EditUser() {
     const location = useLocation();
@@ -99,7 +100,7 @@ export default function EditUser() {
     }
 
     return (
-        <>
+        <Layout>
             <div className="container">
                 <section className="centered create-account">
                     <h2>Edit account</h2>
@@ -140,6 +141,6 @@ export default function EditUser() {
                     </form>
                 </section>
             </div>
-        </>
+        </Layout>
     );
 }
