@@ -5,15 +5,19 @@ import buttonStyles from "../styles/button.module.css";
 
 import { useState, useEffect, useContext } from "react";
 import checkIfActiveAccount, { connectWallet, disconnectWallet, WalletContext } from "../lib/wallet";
-import { getUser, signOut } from "../lib/supabase";
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 
 import Link from "next/link";
 
-function Header({ session }) {
+function Header() {
     const wallet = useContext(WalletContext);
 
+    const session = useSession();
+    const supabaseClient = useSupabaseClient();
+
+    console.log("Session: ", session);
+
     const [isActiveWallet, setActiveWallet] = useState();
-    const [isActiveUser, setActiveUser] = useState(false);
 
     useEffect(() => {
         const checkActiveAccount = async () => {
@@ -22,20 +26,6 @@ function Header({ session }) {
         };
         checkActiveAccount();
     }, [wallet]);
-
-    useEffect(() => {
-        const checkIfActiveUser = async () => {
-            const user = await getUser();
-
-            if(user) {
-                setActiveUser(true);
-                console.log("User:", user);
-            } 
-        };
-        checkIfActiveUser();
-    }, [session]);
-
-    console.log("Session", session);
 
     async function handleClick(e) {
         e.preventDefault();
@@ -61,12 +51,12 @@ function Header({ session }) {
                     <Logo className={styles.logo} />
                 </Link>
                 <div className={styles.menu_buttons}>
-                    {isActiveUser ? (
+                    {session ? (
                         <>
                             <Link className={styles.menu_item} href="/account">
                                 Account
                             </Link>
-                            <Link className={styles.menu_item} href="" onClick={signOut}>
+                            <Link className={styles.menu_item} href="" onClick={() => supabaseClient.auth.signOut()}>
                                 Sign out
                             </Link>
                         </>

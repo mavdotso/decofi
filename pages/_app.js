@@ -4,27 +4,26 @@ import "../styles/index.css";
 import Header from "../components/header";
 import Footer from "../components/footer";
 
-import { useState } from "react"
-
+import { useState } from "react";
+import { useRouter } from 'next/router'
 
 import { WalletContext, beaconWallet } from "../lib/wallet";
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
-import { SessionContextProvider } from '@supabase/auth-helpers-react'
-
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
+import supabase from "../lib/supabase";
 
 function MyApp({ Component, pageProps }) {
+    const router = useRouter();
     const [wallet] = useState(beaconWallet);
-    const [supabase] = useState(() => createBrowserSupabaseClient())
 
     return (
         <>
-          <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
-            <WalletContext.Provider value={wallet}>
-              <Header />
-                <Component {...pageProps} />
-              <Footer />
-            </WalletContext.Provider>
-          </SessionContextProvider>
+            <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
+                <WalletContext.Provider value={wallet}>
+                    <Header />
+                    <Component {...pageProps} />
+                    <Footer />
+                </WalletContext.Provider>
+            </SessionContextProvider>
         </>
     );
 }
