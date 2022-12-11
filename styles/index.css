@@ -161,7 +161,7 @@ section {
     --max-width: 60rem;
     --horisontal-padding: 2rem;
 
-    width: min(var(--max-width), 100% - (var(--horisontal-padding) * 2));
+    width: min(var(--max-width), 100% - (var(--horisontal-padding)));
     margin-inline: auto;
 }
 
@@ -315,7 +315,9 @@ section {
     section {
         padding: 2em 0;
     }
-
+    .create-account form {
+        width: min(30rem, 100%)
+    }
     .even-columns {
         gap: 0;
     }

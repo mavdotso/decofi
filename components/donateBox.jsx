@@ -51,12 +51,8 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
             if (from === "") {
                 from = connectedAccount;
             }
-
             const transactionHash = await sendDonation(wallet, tezosWalletAddress, amount);
-
             await submitDonation(from, id, amount, message, transactionHash);
-
-            console.log("From: ", from, " id: ", id, " amount: ", amount, " message ", message, transactionHash);
         }
     }
 
