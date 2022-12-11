@@ -7,7 +7,7 @@ export default function Layout({ children }) {
     return (
         <>
             <Header />
-            <motion.div key="motion div" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div key={children} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 {children}
             </motion.div>
             <Analytics />
