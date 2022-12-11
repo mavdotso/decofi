@@ -1,5 +1,5 @@
 import { addressSlice } from "../lib/utils";
-import styles from "../styles/ActivityBox.module.css";
+import styles from "../styles/activityBox.module.css";
 
 export default function ActivityBox({ from, amount, message }) {
     return (
