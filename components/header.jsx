@@ -12,18 +12,19 @@ import Link from "next/link";
 
 function Header() {
     const wallet = useContext(WalletContext);
-
     const session = useSession();
     const supabaseClient = useSupabaseClient();
 
     const [isActiveWallet, setActiveWallet] = useState();
 
     useEffect(() => {
-        const checkActiveAccount = async () => {
-            const account = await checkIfActiveAccount(wallet);
-            setActiveWallet(account);
-        };
+        if(wallet !== undefined) {
+            const checkActiveAccount = async () => {
+                const account = await checkIfActiveAccount(wallet);
+                setActiveWallet(account);
+            };
         checkActiveAccount();
+        }
     }, [wallet]);
 
     async function handleClick(e) {
