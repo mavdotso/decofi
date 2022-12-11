@@ -14,10 +14,11 @@ function MyApp({ Component, pageProps }) {
     const [wallet, setWallet] = useState();
 
     useEffect(()=>{
-        async () => {
+        const func = async () => {
             const _wallet = await initializeWallet();
             setWallet(_wallet);
         }
+        func();
     }, []);
 
     return (

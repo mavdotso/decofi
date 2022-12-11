@@ -5,7 +5,7 @@ import buttonStyles from "../styles/button.module.css";
 
 import { useState, useEffect, useContext } from "react";
 import checkIfActiveAccount, { connectWallet, disconnectWallet, WalletContext } from "../lib/wallet";
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSession } from '@supabase/auth-helpers-react'
 import { signOut } from "../lib/supabase"
 
 import Link from "next/link";
@@ -13,7 +13,6 @@ import Link from "next/link";
 function Header() {
     const wallet = useContext(WalletContext);
     const session = useSession();
-    const supabaseClient = useSupabaseClient();
 
     const [isActiveWallet, setActiveWallet] = useState();
 
