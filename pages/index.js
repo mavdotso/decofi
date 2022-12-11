@@ -26,7 +26,7 @@ export default function Home() {
         <main>
             <section className="container flow section-hero centered">
                 <h1>
-                    Buy me a coffee on blockchain <sup>ꜩ</sup>{" "}
+                    Buy me a coffee on blockchain <sup className="tezos_sign">ꜩ</sup>{" "}
                 </h1>
                 <p className="sub-heading">Receive tips and donations from your fans and followers direclty to your web3 wallet.</p>
 
