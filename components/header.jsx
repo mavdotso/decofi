@@ -69,7 +69,6 @@ function Header() {
                             </Link>
                         </>
                     )}
-                    ;
                     {isActiveWallet ? (
                         <Button
                             onClick={handleClick}
