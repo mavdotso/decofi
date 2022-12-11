@@ -6,6 +6,8 @@ import { signIn } from "../../lib/supabase";
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
 import Layout from "../../components/Layout/layout";
+import PasswordField from "../../components/passwordInput";
+
 
 export default function SignIn() {
 
@@ -45,9 +47,7 @@ export default function SignIn() {
                         <div className="input-box">
                             <input name="email" value={email} placeholder="Email" onChange={handleEmail}></input>
                         </div>
-                        <div className="input-box">
-                            <input name="password" value={password} placeholder="Password" onChange={handlePassword}></input>
-                        </div>
+                            <PasswordField value={ password } onChange={ handlePassword } />
                             { loginError ? <span className="input-tip input-invalid">Login error! Please, try again.</span> : ''}
                             <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Sign in" />
                         <p>

@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import checkIfActiveAccount, { sendDonation, connectWallet, WalletContext } from "../lib/wallet";
 import { submitDonation } from "../lib/supabase";
 
-import styles from "../styles/DonateBox.module.css";
+import styles from "../styles/donateBox.module.css";
 
 import Button from "./button";
 import buttonStyles from "../styles/button.module.css";

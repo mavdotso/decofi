@@ -7,8 +7,10 @@ import buttonStyles from "../styles/button.module.css";
 import convertToSlug from "../lib/utils";
 
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 export default function Home() {
+    const router = useRouter();
 
     const [newUsername, setNewUsername] = useState("");
 
@@ -18,7 +20,7 @@ export default function Home() {
 
     function createAccount(e) {
         e.preventDefault();
-        router.push({ pathname: "/sign-up", query: { username: newUsername } }, {as:"/sign-up"} );
+        router.push({ pathname: "/sign-up", query: { username: newUsername } }, { as: "/sign-up" });
     }
 
     return (

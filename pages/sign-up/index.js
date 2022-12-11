@@ -5,11 +5,17 @@ import supabase, { signUp } from "../../lib/supabase";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
+import PasswordField from "../../components/passwordInput";
 import Layout from "../../components/Layout/layout";
 
 export default function SignUp() {
     const router = useRouter();
     // const navigate = useNavigate();
+
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePassword = () => {
+        setShowPassword(!showPassword);
+    }
 
     const [username, setUsername] = useState(router.query.username);
     const [email, setEmail] = useState("");
@@ -112,9 +118,7 @@ export default function SignUp() {
                         <div className="input-box">
                             <input name="email" value={email} placeholder="Email*" onChange={handleEmail}></input>
                         </div>
-                        <div className="input-box">
-                            <input name="password" value={password} placeholder="Password*" onChange={handlePassword} autoComplete="off"></input>
-                        </div>
+                        <PasswordField value={ password } onChange={ handlePassword } />
                         <div className="input-box">
                             <input
                                 name="tezosWalletAddress"
