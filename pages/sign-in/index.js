@@ -5,12 +5,9 @@ import { signIn } from "../../lib/supabase";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
-import Layout from "../../components/Layout/layout";
 import PasswordField from "../../components/passwordInput";
 
-
 export default function SignIn() {
-
     const router = useRouter();
 
     const [email, setEmail] = useState("");
@@ -29,15 +26,15 @@ export default function SignIn() {
         e.preventDefault();
         const res = await signIn(email, password);
 
-        if(res.session === null) {
+        if (res.session === null) {
             setLoginError(true);
         } else {
-            router.push({ pathname: "/account" } );
+            router.push({ pathname: "/account" });
         }
     }
 
     return (
-        <Layout>
+        <main>
             <div className="container">
                 <section className="centered create-account">
                     <h2>Sign In</h2>
@@ -47,18 +44,18 @@ export default function SignIn() {
                         <div className="input-box">
                             <input name="email" value={email} placeholder="Email" onChange={handleEmail}></input>
                         </div>
-                            <PasswordField value={ password } onChange={ handlePassword } />
-                            { loginError ? <span className="input-tip input-invalid">Login error! Please, try again.</span> : ''}
-                            <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Sign in" />
+                        <PasswordField value={password} onChange={handlePassword} />
+                        {loginError ? <span className="input-tip input-invalid">Login error! Please, try again.</span> : ""}
+                        <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Sign in" />
                         <p>
                             Don't have a creator account?{" "}
-                            <Link href={ {pathname: '/sign-up', query: { username: '' }} } as="/sign-up">
+                            <Link href={{ pathname: "/sign-up", query: { username: "" } }} as="/sign-up">
                                 Create it here!
                             </Link>
                         </p>
                     </form>
                 </section>
             </div>
-        </Layout>
+        </main>
     );
 }

@@ -1,11 +1,8 @@
 import "../styles/normalize.css";
 import "../styles/index.css";
-
-import Header from "../components/header";
-import Footer from "../components/footer";
+import Layout from "../components/Layout/layout";
 
 import { useState } from "react";
-import { useRouter } from "next/router";
 
 import { WalletContext, beaconWallet } from "../lib/wallet";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
@@ -14,23 +11,16 @@ import supabase from "../lib/supabase";
 import { AnimatePresence } from "framer-motion";
 
 function MyApp({ Component, pageProps }) {
-    if (typeof window !== "undefined") {
-        // Perform localStorage action
-        const item = localStorage.getItem("key");
-    }
-
     const [wallet] = useState(beaconWallet);
-
-    const router = useRouter();
 
     return (
         <>
             <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
                 <WalletContext.Provider value={wallet}>
                     <AnimatePresence mode="wait" initial={false}>
-                        <Header />
-                        <Component {...pageProps} />
-                        <Footer />
+                        <Layout>
+                            <Component {...pageProps} />
+                        </Layout>
                     </AnimatePresence>
                 </WalletContext.Provider>
             </SessionContextProvider>
