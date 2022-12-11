@@ -7,16 +7,11 @@ import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
 import PasswordField from "../../components/passwordInput";
 
-export default function SignUp() {
+export default function SignUp({ defaultUsername }) {
     const router = useRouter();
     // const navigate = useNavigate();
 
-    const [showPassword, setShowPassword] = useState(false);
-    const togglePassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const [username, setUsername] = useState(router.query.username);
+    const [username, setUsername] = useState(defaultUsername);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -27,28 +22,33 @@ export default function SignUp() {
     const [imageURL, setImageURL] = useState("");
 
     useEffect(() => {
+        if(username === null || username === undefined || username === '' ) {
+            setUsername('')
+            if (router.query.username) {
+                const _username = router.query.username;
+                setUsername(_username);
+            }
+        }  
+    }, []);
+
+    useEffect(() => {
         async function checkIfUsernameAvailable() {
             const { data, err } = await supabase.from("users").select().eq("username", username.toLowerCase());
 
             if (data) {
-                console.log(data.length === 0);
                 if (data.length === 0) {
                     setIsAvailable(true);
                 } else {
                     setIsAvailable(false);
                 }
             }
-
-            if (err) {
-                setIsAvailable(true);
-            }
         }
 
-        if (username !== "") {
+        if (username !== "" && username !== undefined && username !== null ) {
             checkIfUsernameAvailable();
         }
     }, [username]);
-
+    
     function handleUsernameChange(e) {
         setUsername(convertToSlug(e.target.value));
     }
@@ -103,13 +103,12 @@ export default function SignUp() {
                     <form onSubmit={handleSubmit}>
                         <div className="input-box">
                             <input name="username" value={username} placeholder={username === "" ? "Your username" : username} onChange={handleUsernameChange} minLength={3}></input>
-
-                            {isAvailable && username.length >= 3 ? (
+                            {username === '' ? (
+                                <span className="input-tip">  </span>
+                            ) : isAvailable && username.length >= 3 ? (
                                 <span className="input-tip input-valid">Username is available</span>
-                            ) : username.length < 3 ? (
+                            ) : isAvailable && username.length < 3 ? (
                                 <span className="input-tip input-invalid">Minimum 3 characters</span>
-                            ) : username === "" ? (
-                                ""
                             ) : (
                                 <span className="input-tip input-invalid">Username is not available</span>
                             )}
@@ -145,4 +144,10 @@ export default function SignUp() {
             </div>
         </main>
     );
+}
+
+export async function getStaticProps() {
+    return {
+        props: { defaultUsername: '' },
+    };
 }
