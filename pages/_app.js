@@ -10,11 +10,15 @@ import { useRouter } from "next/router";
 import { WalletContext, beaconWallet } from "../lib/wallet";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import supabase from "../lib/supabase";
-import { useEffect } from "react";
 
 import { AnimatePresence } from "framer-motion";
 
 function MyApp({ Component, pageProps }) {
+    if (typeof window !== "undefined") {
+        // Perform localStorage action
+        const item = localStorage.getItem("key");
+    }
+
     const [wallet] = useState(beaconWallet);
 
     const router = useRouter();
