@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;800;900&display=swap");
 
+/* NORMALIZING */
 *,
 *::before,
 *::after {
@@ -18,10 +19,7 @@ video {
     max-width: 100%;
 }
 
-/* html {
-  color-scheme: light dark;
-} */
-
+/* VARIABLES */
 :root {
     --dark-primary: #262626;
     --dark-secondary: #333333;
@@ -37,14 +35,15 @@ video {
     --font-size-forms: 1.15rem;
 }
 
+/* GENERAL STYLING */
 body {
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--light-primary);
     font-family: "Work Sans", sans-serif;
-    display:flex; 
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
 }
 
 h1,
@@ -54,18 +53,16 @@ h4,
 h5 {
     font-family: "Work Sans", sans-serif;
     font-weight: 900;
+    line-height: 1em;
+    margin: 0;
 }
 
 h1 {
     font-size: 4.375rem;
-    line-height: 1em;
-    margin: 0;
 }
 
 h2 {
     font-size: 3rem;
-    line-height: 1em;
-    margin: 0;
 }
 
 h3 {
@@ -76,6 +73,19 @@ p {
     font-family: "Work Sans", sans-serif;
     font-weight: 400;
     line-height: 1.5rem;
+}
+
+/* GENERAL INPUT STYLING */
+.input-box {
+    font-weight: 600;
+    font-size: var(--font-size-forms);
+    display: inline-block;
+    border: 0.15em solid var(--dark-primary);
+    border-radius: var(--input-border-radius);
+    padding: 1.2em 1.8em;
+    box-shadow: -0.3em 0.3em 0 0 var(--dark-primary);
+    background-color: var(--light-primary);
+    text-align: left;
 }
 
 input {
@@ -121,119 +131,6 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
-textarea {
-    resize: none;
-}
-
-textarea {
-    resize: none;
-}
-
-.claim-username-form .input-box {
-    margin-right: 1em;
-}
-
-.under-cta-text {
-    font-size: 0.8em;
-}
-
-.section-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 2em;
-}
-
-.section-cards .card:first-child {
-    grid-row: span 2;
-}
-
-.section-cards .card:last-child {
-    grid-column-start: 2;
-}
-
-.card {
-    padding: 1em 2em;
-    line-height: 1.5em;
-    border-radius: 1.5em;
-    background-color: #fff;
-}
-
-.example-donation {
-    font-weight: 600;
-    background-color: var(--light-primary);
-    border: 0.15em solid var(--dark-primary);
-    border-radius: 0.5em;
-    box-shadow: -0.3em 0.3em 0 0 var(--dark-primary);
-    padding: 0 1.8em;
-    margin-top: 1em;
-}
-
-.example-donation:nth-child(4) {
-    opacity: 0.7;
-}
-
-.example-donation:last-child {
-    opacity: 0.4;
-}
-
-.example-bold {
-    font-weight: 600;
-}
-
-.section-example {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em;
-    align-items: center;
-}
-
-.example-sub-heading {
-    font-weight: 500;
-    font-size: 1.3em;
-    line-height: 1.5em;
-}
-
-/* USER PAGE */
-.user-donate-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 2em 0;
-}
-
-.section-user-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 3em;
-    padding: 3em 0;
-}
-
-.user-description {
-    flex-grow: 2;
-}
-
-.user-picture {
-    flex-grow: 1;
-    border-radius: 50em;
-    max-width: 12.5em;
-    max-height: 12.5em;
-    aspect-ratio: 1/1;
-}
-
-.create-account form {
-    display: grid;
-    width: 60%;
-    margin: 0 auto;
-    gap: 2em;
-    text-align: left;
-}
-
-.create-account form input {
-    width: 100%;
-}
-
 .input-tip {
     font-size: 0.8em;
     font-weight: 400;
@@ -247,13 +144,11 @@ textarea {
     color: #be574b;
 }
 
-.disabled {
-    pointer-events: none;
+textarea {
+    resize: none;
 }
 
-
-/* General styling */
-
+/* SPECIFIC STYLES */
 section {
     padding: 5em 0;
 }
@@ -293,33 +188,116 @@ section {
     margin: 1em auto;
 }
 
-/* General input box */
-.input-box {
-    font-weight: 600;
-    font-size: var(--font-size-forms);
-    display: inline-block;
-    border: 0.15em solid var(--dark-primary);
-    border-radius: var(--input-border-radius);
-    padding: 1.2em 1.8em;
-    box-shadow: -0.3em 0.3em 0 0 var(--dark-primary);
-    background-color: var(--light-primary);
-}
-
+/* HERO SECTION */
 .claim-username-form {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    align-items: start;
     justify-content: center;
-    align-items: flex-start;
+    width: min(50rem, 100% - (var(--horisontal-padding) * 2));
+    margin-inline: auto;
 }
 
+.under-cta-text {
+    font-size: 0.8em;
+    margin-top: 1em;
+}
+
+/* CARDS SECTION */
+.section-cards {
+    display: grid;
+    gap: 2em;
+}
+
+.card {
+    padding: 1em 2em;
+    line-height: 1.5em;
+    border-radius: 1.5em;
+    background-color: #fff;
+}
+
+.section-cards .card:first-child {
+    grid-row: span 2;
+}
+
+.section-cards .card:last-child {
+    grid-column-start: 2;
+}
+
+.example-donation {
+    font-weight: 600;
+    background-color: var(--light-primary);
+    border: 0.15em solid var(--dark-primary);
+    border-radius: 0.5em;
+    box-shadow: -0.3em 0.3em 0 0 var(--dark-primary);
+    padding: 0 1.8em;
+    margin-top: 1em;
+}
+
+.example-donation:nth-child(4) {
+    opacity: 0.7;
+}
+
+.example-donation:last-child {
+    opacity: 0.4;
+}
+
+.example-bold {
+    font-weight: 600;
+}
+
+/* CREATE ACCOUNT PAGE */
+.create-account form {
+    display: grid;
+    width: 60%;
+    margin: 0 auto;
+    gap: 2em;
+    text-align: left;
+}
+
+.create-account form input {
+    width: 100%;
+}
+
+/* USER PAGE */
 .user-info {
     display: grid;
     grid-template-columns: 1fr 3fr;
     gap: 3rem;
 }
 
+.user-picture {
+    flex-grow: 1;
+    border-radius: 50em;
+    max-width: 12.5em;
+    max-height: 12.5em;
+    aspect-ratio: 1/1;
+}
+
+.user-description {
+    flex-grow: 2;
+}
+
+.user-donate-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 2em 0;
+}
+
 @media (max-width: 50em) {
     h1 {
         font-size: 3rem;
+    }
+    .sub-heading {
+        font-size: 1.3rem;
+    }
+    .claim-username-form {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .input-box span {
+        display: none;
     }
     .user-info {
         grid-template-columns: 1fr;
@@ -336,6 +314,18 @@ section {
     }
     section {
         padding: 2em 0;
+    }
+
+    .even-columns {
+        gap: 0;
+    }
+
+    .section-cards .card:first-child {
+        grid-row: span 1;
+    }
+
+    .section-cards .card:last-child {
+        grid-column-start: 1;
     }
 }
 

@@ -1,5 +1,6 @@
-import "../styles/normalize.css";
 import "../styles/index.css";
+import "../styles/normalize.css";
+
 import Layout from "../components/Layout/layout";
 
 import { useState, useEffect } from "react";
@@ -25,7 +26,7 @@ function MyApp({ Component, pageProps }) {
         <>
             <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
                 <WalletContext.Provider value={ wallet }>
-                    <AnimatePresence mode="wait" initial={false}>
+                    <AnimatePresence initial={false}>
                         <Layout>
                             <Component {...pageProps} />
                         </Layout>

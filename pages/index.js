@@ -83,7 +83,7 @@ export default function Home() {
                 <section className="container flow even-columns">
                     <div className="content">
                         <h2>Simple</h2>
-                        <p className="example-sub-heading">
+                        <p className="sub-heading">
                             Make supporting you quick and easy. <br />
                             <br />
                             Setup your account, connect your wallet and begin getting payouts in less than 3 minutes.
