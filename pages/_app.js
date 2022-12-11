@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
         <>
             <SessionContextProvider supabaseClient={supabase} initialSession={pageProps.initialSession}>
                 <WalletContext.Provider value={ wallet }>
-                    <AnimatePresence initial={false}>
+                    <AnimatePresence mode="wait">
                         <Layout>
                             <Component {...pageProps} />
                         </Layout>
