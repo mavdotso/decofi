@@ -1,7 +1,7 @@
 import Head from "next/head";
 import PasswordField from "../../components/passwordInput";
 import { useState, useEffect } from "react";
-import supabase, { resetPassword } from "../../lib/supabase";
+import { setNewPassword } from "../../lib/supabase";
 import { useSession } from "@supabase/auth-helpers-react";
 
 import Button from "../../components/button";
@@ -21,20 +21,8 @@ export default function PasswordReset() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
+        setNewPassword(password)
     }
-
-    useEffect(() => {
-        supabase.auth.onAuthStateChange(async (event, session) => {
-          if (event == "PASSWORD_RECOVERY") {
-            const { data, error } = await supabase.auth
-              .updateUser({ password: password })
-     
-            if (data) alert("Password updated successfully!")
-            if (error) alert("There was an error updating your password.")
-          }
-        })
-      }, [])
 
     return (
         <>
