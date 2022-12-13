@@ -1,7 +1,7 @@
 import Head from "next/head";
 import PasswordField from "../../components/passwordInput";
 import { useState, useEffect } from "react";
-import { setNewPassword } from "../../lib/supabase";
+import { setNewPassword, signOut } from "../../lib/supabase";
 import { useRouter } from "next/router";
 import { useSession } from "@supabase/auth-helpers-react";
 
@@ -19,6 +19,7 @@ export default function PasswordReset() {
 
     useEffect(() => {
         if (session === undefined || session === null) {
+            signOut();
             router.push({ pathname: "/sign-in" });
         }
     }, []);

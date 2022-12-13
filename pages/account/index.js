@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useState, useEffect } from "react";
-import { getUser, updateUserDetails } from "../../lib/supabase";
+import { getUser, updateUserDetails, signOut } from "../../lib/supabase";
 import { useSession } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 
@@ -24,6 +24,7 @@ export default function Account() {
     useEffect(() => {
         const checkActiveUser = async () => {
             if (session === undefined || session === null) {
+                signOut();
                 router.push({ pathname: "/sign-in" });
             } else {
                 const user = await getUser(session.user);
@@ -34,8 +35,8 @@ export default function Account() {
                     setDescription(user.description);
                     setImageURL(user.imageURL);
                 } else {
+                    signOut();
                     router.push({ pathname: "/sign-in" });
-                
                 }
             }
         };

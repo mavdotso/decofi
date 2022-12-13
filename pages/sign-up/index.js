@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import convertToSlug, { generateRandomString } from "../../lib/utils";
 import supabase, { signUp, updateUserDetails } from "../../lib/supabase";
+import { motion } from "framer-motion";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
@@ -86,13 +87,14 @@ export default function SignUp({ defaultUsername }) {
         const imageExtention = avatarFile.type.split('/').pop();
         const randomString = generateRandomString();
 
-        const { data, error } = await supabase.storage.from(SUPABASE_STORAGE_AVATARS).upload(`${userID}${randomString}.${imageExtention}`, avatarFile, {
+        const { data, error } = await supabase.storage
+        .from(SUPABASE_STORAGE_AVATARS)
+        .upload(`${userID}${randomString}.${imageExtention}`, avatarFile, {
             cacheControl: '3600',
             upsert: false
           });
 
         if (data) {
-            console.log(data);
             setImageURL(userID,randomString,avatarFile.type);
         }
         if (error) {
@@ -129,7 +131,7 @@ export default function SignUp({ defaultUsername }) {
                 <div className="container">
                     <section className="centered create-account">
                         {!stepTwo ? (
-                            <>
+                            <motion.div key="stepOne" initial={{ opacity: 1 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} >
                                 <h2>Create your account</h2>
                                 <p className="sub-heading">And begin receiving donations within 3 minutes!</p>
                                 <form onSubmit={handleRegistration}>
@@ -151,9 +153,9 @@ export default function SignUp({ defaultUsername }) {
                                     <PasswordField value={password} handlePassword={handlePassword} />
                                     <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Next step" />
                                 </form>
-                            </>
+                            </motion.div>
                         ) : (
-                            <>
+                            <motion.div key="stepTwo" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                                 <h2>Complete your account</h2>
                                 <p className="sub-heading">Fill in your account details</p>
                                 <form onSubmit={handleCompleteProfile}>
@@ -164,6 +166,7 @@ export default function SignUp({ defaultUsername }) {
                                             placeholder="Your Tezos wallet for donations*"
                                             onChange={handletezosWalletAddressChange}
                                             autoComplete="off"
+                                            required
                                         ></input>
                                         <span className="input-tip">Not supporting .tez wallets</span>
                                     </div>
@@ -178,13 +181,10 @@ export default function SignUp({ defaultUsername }) {
                                         <p></p>
                                         <input type="file" accept="image/png, image/jpeg, image/jpg" name="avatar" onChange={handleUpload}></input>
                                     </div>
-                                    <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Register" />
+                                    <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Complete registration" />
                                 </form>
-                            </>
+                            </motion.div>
                         )}
-                        <p>
-                            Already have an account? <Link href={{ pathname: "/sign-in" }}>Sign in here!</Link>
-                        </p>
                     </section>
                 </div>
             </main>
