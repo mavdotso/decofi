@@ -1,6 +1,5 @@
 import Head from "next/head";
 import PasswordField from "../../components/passwordInput";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import supabase, { resetPassword } from "../../lib/supabase";
 import { useSession } from "@supabase/auth-helpers-react";
@@ -12,14 +11,12 @@ export default function PasswordReset() {
     const pageTitle = `Reset password to DeCoFi`;
     const pageDescription = `Reset your password`;
 
-    const router = useRouter();
-
     const session = useSession();
 
-    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    function handleEmail(e) {
-        setEmail(e.target.value);
+    function handlePassword(e) {
+        setPassword(e.target.value);
     }
 
     async function handleSubmit(e) {
@@ -31,7 +28,7 @@ export default function PasswordReset() {
         supabase.auth.onAuthStateChange(async (event, session) => {
           if (event == "PASSWORD_RECOVERY") {
             const { data, error } = await supabase.auth
-              .updateUser({ password: newPassword })
+              .updateUser({ password: password })
      
             if (data) alert("Password updated successfully!")
             if (error) alert("There was an error updating your password.")
