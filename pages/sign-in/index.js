@@ -65,7 +65,7 @@ export default function SignIn() {
                                     Don't have a creator account? <Link href={{ pathname: "/sign-up", query: { username: "" } }} as="/sign-up"> Create it here! </Link>
                                 </span>
                                 <br />
-                                {loginError ? <span> Forgot your password? <Link href={{ pathname: "/account/password-reset" }}>Reset it here</Link> </span> : ""}
+                                {loginError ? <span> Forgot your password? <Link href={{ pathname: "/account/forgot-password" }}>Reset it here</Link> </span> : ""}
                             </p>
                         </form>
                     </section>

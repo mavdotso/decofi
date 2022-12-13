@@ -24,20 +24,9 @@ export default function PasswordReset() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
+        const res = await resetPassword(email);
+        console.log(res);
     }
-
-    useEffect(() => {
-        supabase.auth.onAuthStateChange(async (event, session) => {
-          if (event == "PASSWORD_RECOVERY") {
-            const { data, error } = await supabase.auth
-              .updateUser({ password: newPassword })
-     
-            if (data) alert("Password updated successfully!")
-            if (error) alert("There was an error updating your password.")
-          }
-        })
-      }, [])
 
     return (
         <>
@@ -52,11 +41,19 @@ export default function PasswordReset() {
             <main>
                 <div className="container">
                     <section className="centered create-account">
-                        <h2>New password</h2>
-                        <p className="sub-heading">What would you like your new password to be?</p>
+                        <h2>Reset password</h2>
+                        <p className="sub-heading">Input your email address and we will send you a link to reset your password</p>
+
                         <form onSubmit={handleSubmit}>
-                            <PasswordField value={password} onChange={handlePassword} />
-                            <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Set a new password" />
+                            <div className="input-box">
+                                <input name="email" value={email} placeholder="Email*" onChange={handleEmail}></input>
+                            </div>
+                            <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Send a password reset link" />
+                            <p>
+                                <Link href={{ pathname: "/sign-in"}}>
+                                    Back to login
+                                </Link>
+                            </p>
                         </form>
                     </section>
                 </div>
