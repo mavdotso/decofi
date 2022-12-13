@@ -1,8 +1,7 @@
 import Head from "next/head";
 import PasswordField from "../../components/passwordInput";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { setNewPassword } from "../../lib/supabase";
-import { useSession } from "@supabase/auth-helpers-react";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
@@ -10,8 +9,6 @@ import buttonStyles from "../../styles/button.module.css";
 export default function PasswordReset() {
     const pageTitle = `Reset password to DeCoFi`;
     const pageDescription = `Reset your password`;
-
-    const session = useSession();
 
     const [password, setPassword] = useState("");
 

@@ -55,7 +55,7 @@ function Header() {
                             <Link className={styles.menu_item} href="/account">
                                 Account
                             </Link>
-                            <Link className={styles.menu_item} href="" onClick={signOut}>
+                            <Link className={styles.menu_item} href="" onClick={ signOut }>
                                 Sign out
                             </Link>
                         </>
