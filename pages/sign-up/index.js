@@ -2,8 +2,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import convertToSlug from "../../lib/utils";
-import supabase, { signUp } from "../../lib/supabase";
+import convertToSlug, { generateRandomString } from "../../lib/utils";
+import supabase, { signUp, updateUserDetails } from "../../lib/supabase";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
@@ -83,11 +83,17 @@ export default function SignUp({ defaultUsername }) {
 
     async function handleUpload(e) {
         const avatarFile = e.target.files[0];
-        const { data, error } = await supabase.storage.from(SUPABASE_STORAGE_AVATARS).upload(`${res.user.id}${avatarFile.type}`, avatarFile);
+        const imageExtention = avatarFile.type.split('/').pop();
+        const randomString = generateRandomString();
+
+        const { data, error } = await supabase.storage.from(SUPABASE_STORAGE_AVATARS).upload(`${userID}${randomString}.${imageExtention}`, avatarFile, {
+            cacheControl: '3600',
+            upsert: false
+          });
 
         if (data) {
             console.log(data);
-            setImageURL(res.user.id, avatarFile.type);
+            setImageURL(userID,randomString,avatarFile.type);
         }
         if (error) {
             console.log(error);
@@ -98,15 +104,15 @@ export default function SignUp({ defaultUsername }) {
         e.preventDefault();
         const res = await signUp(email, password, username);
 
-        if (res.user !== null) {
+        if (res.user !== null) { // Add checking for errors
             setStepTwo(true);
+            setUserID(res.user.id);
         }
     }
 
     async function handleCompleteProfile(e) {
         e.preventDefault();
-
-        console.log(tezosWalletAddress, description, twitterAccount, imageURL);
+        const res = updateUserDetails(userID, description, tezosWalletAddress, twitterAccount, imageURL);
     }
 
     return (
