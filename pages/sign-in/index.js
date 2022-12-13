@@ -61,10 +61,11 @@ export default function SignIn() {
                             {loginError ? <span className="input-tip input-invalid">Login error! Please, try again.</span> : ""}
                             <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Sign in" />
                             <p>
-                                Don't have a creator account?{" "}
-                                <Link href={{ pathname: "/sign-up", query: { username: "" } }} as="/sign-up">
-                                    Create it here!
-                                </Link>
+                                <span>
+                                    Don't have a creator account? <Link href={{ pathname: "/sign-up", query: { username: "" } }} as="/sign-up"> Create it here! </Link>
+                                </span>
+                                <br />
+                                {loginError ? <span> Forgot your password? <Link href={{ pathname: "/account/password-reset" }}>Reset it here</Link> </span> : ""}
                             </p>
                         </form>
                     </section>
