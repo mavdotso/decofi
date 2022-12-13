@@ -35,6 +35,7 @@ export default function Account() {
                     setImageURL(user.imageURL);
                 } else {
                     router.push({ pathname: "/sign-in" });
+                
                 }
             }
         };
