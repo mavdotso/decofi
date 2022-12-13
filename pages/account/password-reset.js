@@ -18,7 +18,7 @@ export default function PasswordReset() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        setNewPassword(password)
+        setNewPassword(password);
     }
 
     return (
@@ -37,7 +37,7 @@ export default function PasswordReset() {
                         <h2>New password</h2>
                         <p className="sub-heading">What would you like your new password to be?</p>
                         <form onSubmit={handleSubmit}>
-                            <PasswordField value={password} onChange={handlePassword} />
+                            <PasswordField value={password} handlePassword={handlePassword} />
                             <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Set a new password" />
                         </form>
                     </section>

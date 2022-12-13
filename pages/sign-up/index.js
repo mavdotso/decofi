@@ -130,7 +130,7 @@ export default function SignUp({ defaultUsername }) {
                             <div className="input-box">
                                 <input name="email" value={email} placeholder="Email*" onChange={handleEmail}></input>
                             </div>
-                            <PasswordField value={password} onChange={handlePassword} />
+                            <PasswordField value={password} handlePassword={handlePassword} />
                             <div className="input-box">
                                 <input
                                     name="tezosWalletAddress"

@@ -29,7 +29,7 @@ export default function SignIn() {
     async function handleSubmit(e) {
         e.preventDefault();
         const res = await signIn(email, password);
-
+        console.log(res);
         if (res.session === null) {
             setLoginError(true);
         } else {
@@ -57,15 +57,14 @@ export default function SignIn() {
                             <div className="input-box">
                                 <input name="email" value={email} placeholder="Email*" onChange={handleEmail}></input>
                             </div>
-                            <PasswordField value={password} onChange={handlePassword} />
-                            {loginError ? <span className="input-tip input-invalid">Login error! Please, try again.</span> : ""}
+                            <PasswordField value={ password } handlePassword={ handlePassword } />
                             <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Sign in" />
+                            {loginError ? <p className="input-tip input-invalid">Login error! Please, try again.<br />Forgot your password? <Link href={{ pathname: "/account/forgot-password" }}>Reset it here</Link></p> : ""}
                             <p>
                                 <span>
                                     Don't have a creator account? <Link href={{ pathname: "/sign-up", query: { username: "" } }} as="/sign-up"> Create it here! </Link>
                                 </span>
                                 <br />
-                                {loginError ? <span> Forgot your password? <Link href={{ pathname: "/account/forgot-password" }}>Reset it here</Link> </span> : ""}
                             </p>
                         </form>
                     </section>

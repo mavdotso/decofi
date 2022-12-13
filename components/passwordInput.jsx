@@ -12,8 +12,8 @@ export default function PasswordField( { password, handlePassword } ) {
 
     return (
         <div className={ `input-box ${styles.input_password}` }>
-            <input type={showPassword ? "text" : "password"} name="password" value={ password } placeholder="Password*" onChange={handlePassword} autoComplete="off"></input>
-            <span className={`${styles.show_password_icon}`}  onClick={togglePassword}>{ showPassword ? <RxEyeOpen /> : <RxEyeClosed />}</span>
+            <input type={showPassword ? "text" : "password"} name="password" value={ password } onChange={ handlePassword} placeholder="Password*" autoComplete="off"></input>
+            <span className={`${styles.show_password_icon}`}  onClick={ togglePassword }>{ showPassword ? <RxEyeOpen /> : <RxEyeClosed />}</span>
         </div>
     );
 }
