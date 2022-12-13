@@ -1,24 +1,24 @@
 .button {
     font-weight: 800;
     border: none;
-    border-radius: 0.5em;
+    border-radius: 0.5rem;
     transition: all ease-in-out 0.3s;
 }
 
 .button_primary {
     background-color: var(--dark-primary);
     color: var(--light-primary);
-    box-shadow: -0.3em 0.3em 0 -0.15em var(--light-primary), -0.3em 0.3em 0 0 var(--dark-primary);
+    box-shadow: -0.3rem 0.3rem 0 -0.15rem var(--light-primary), -0.3rem 0.3rem 0 0 var(--dark-primary);
 }
 
 .button_large {
-    font-size: 1.25em;
-    padding: 1.2em 1.8em;
+    font-size: 1.25rem;
+    padding: 1.5rem 2rem;
 }
 
 .button_small {
-    font-size: 1em;
-    padding: 1em 1.5em;
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
 }
 
 .button_primary:hover {

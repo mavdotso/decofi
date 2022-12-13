@@ -28,9 +28,9 @@ video {
     --light-primary: #fafafa;
     --light-secondary: #edede8;
 
-    --card-border-radius: 1.5em;
-    --input-border-radius: 0.5em;
-    --button-border-radius: 0.5em;
+    --card-border-radius: 1.5rem;
+    --input-border-radius: 0.5rem;
+    --button-border-radius: 0.5rem;
 
     --font-size-forms: 1.15rem;
 }
@@ -53,7 +53,6 @@ h4,
 h5 {
     font-family: "Work Sans", sans-serif;
     font-weight: 900;
-    line-height: 1em;
     margin: 0;
 }
 
@@ -72,7 +71,7 @@ h3 {
 p {
     font-family: "Work Sans", sans-serif;
     font-weight: 400;
-    line-height: 1.5rem;
+    line-height: 1.8rem;
 }
 
 .tezos_sign {
@@ -85,10 +84,10 @@ p {
     font-weight: 600;
     font-size: var(--font-size-forms);
     display: inline-block;
-    border: 0.15em solid var(--dark-primary);
+    border: 0.15rem solid var(--dark-primary);
     border-radius: var(--input-border-radius);
-    padding: 1.2em 1.8em;
-    box-shadow: -0.3em 0.3em 0 0 var(--dark-primary);
+    padding: 1.2em 1.8rem;
+    box-shadow: -0.3rem 0.3rem 0 0 var(--dark-primary);
     background-color: var(--light-primary);
     text-align: left;
 }
@@ -137,7 +136,7 @@ input[type="number"] {
 }
 
 .input-tip {
-    font-size: 0.8em;
+    font-size: 0.8rem;
     font-weight: 400;
 }
 
@@ -155,7 +154,7 @@ textarea {
 
 /* SPECIFIC STYLES */
 section {
-    padding: 5em 0;
+    padding: 5rem 0;
 }
 
 .full-width {
@@ -178,19 +177,23 @@ section {
 }
 
 .flow > * + * {
-    margin-top: 1.5em;
+    margin-top: 1.5rem;
 }
 
 .centered {
     text-align: center;
 }
 
+.centered p {
+    text-align: center;
+}
+
 .sub-heading {
     font-weight: 500;
-    font-size: 1.5em;
-    line-height: 1.5em;
+    font-size: 1.5rem;
+    line-height: 2rem;
     max-width: 40ch;
-    margin: 1em auto;
+    margin: 1rem auto;
 }
 
 /* HERO SECTION */
@@ -204,20 +207,20 @@ section {
 }
 
 .under-cta-text {
-    font-size: 0.8em;
-    margin-top: 1em;
+    font-size: 0.8rem;
+    margin-top: 1rem;
 }
 
 /* CARDS SECTION */
 .section-cards {
     display: grid;
-    gap: 2em;
+    gap: 2rem;
 }
 
 .card {
-    padding: 1em 2em;
-    line-height: 1.5em;
-    border-radius: 1.5em;
+    padding: 3rem;
+    line-height: 1.5rem;
+    border-radius: 1.5rem;
     background-color: #fff;
 }
 
@@ -232,11 +235,11 @@ section {
 .example-donation {
     font-weight: 600;
     background-color: var(--light-primary);
-    border: 0.15em solid var(--dark-primary);
-    border-radius: 0.5em;
-    box-shadow: -0.3em 0.3em 0 0 var(--dark-primary);
-    padding: 0 1.8em;
-    margin-top: 1em;
+    border: 0.15rem solid var(--dark-primary);
+    border-radius: 0.5rem;
+    box-shadow: -0.3rem 0.3rem 0 0 var(--dark-primary);
+    padding: 0 1.8rem;
+    margin-top: 1rem;
 }
 
 .example-donation:nth-child(4) {
@@ -256,7 +259,7 @@ section {
     display: grid;
     width: 60%;
     margin: 0 auto;
-    gap: 2em;
+    gap: 2rem;
     text-align: left;
 }
 
@@ -273,9 +276,9 @@ section {
 
 .user-picture {
     flex-grow: 1;
-    border-radius: 50em;
-    max-width: 12.5em;
-    max-height: 12.5em;
+    border-radius: 50rem;
+    max-width: 12.5rem;
+    max-height: 12.5rem;
     aspect-ratio: 1/1;
 }
 
@@ -287,7 +290,7 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 2em 0;
+    padding: 2rem 0;
 }
 
 @media (max-width: 50em) {
@@ -306,7 +309,7 @@ section {
     }
     .user-info {
         grid-template-columns: 1fr;
-        gap: 1em;
+        gap: 1rem;
         align-items: center;
         justify-content: center;
         text-align: center;
@@ -318,7 +321,7 @@ section {
         width: 50%;
     }
     section {
-        padding: 2em 0;
+        padding: 2rem 0;
     }
     .create-account form {
         width: min(30rem, 100%)

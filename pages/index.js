@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Button from "../components/button";
 import DonateBox from "../components/donateBox";
 
@@ -22,7 +23,15 @@ export default function Home() {
         router.push({ pathname: "/sign-up", query: { username: newUsername } }, { as: "/sign-up" });
     }
 
-    return (
+    return (<>
+        <Head>
+            <title>DeCoFi — make supporting you quick and easy</title>
+            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            <meta charSet="UTF-8" />
+            <meta name="description" content="Make supporting you quick and easy" key="desc" />
+            <meta name="og:title" content="DeCoFi — make supporting you quick and easy" />
+            <meta name="og:description" content="Make supporting you quick and easy" />
+        </Head>
         <main>
             <section className="container flow section-hero centered">
                 <h1>
@@ -82,8 +91,8 @@ export default function Home() {
             <div className="full-width">
                 <section className="container flow even-columns">
                     <div className="content">
-                        <h2>Simple</h2>
-                        <p className="sub-heading">
+                        <h3>Simple</h3>
+                        <p>
                             Make supporting you quick and easy. <br />
                             <br />
                             Setup your account, connect your wallet and begin getting payouts in less than 3 minutes.
@@ -93,5 +102,5 @@ export default function Home() {
                 </section>
             </div>
         </main>
-    );
+    </>);
 }

@@ -4,7 +4,7 @@
     text-align: center;
     justify-content: space-between;
     align-content: center;
-    padding: 3em;
+    padding: 3rem;
 }
 
 .footer_icon {
@@ -16,13 +16,13 @@
 }
 
 .footer .logo {
-    height: 2em;
+    height: 2rem;
 }
 
 @media (max-width: 50em) {
     .footer {
         grid-template-columns: 1fr;
-        gap: 1em;
+        gap: 1rem;
     }
 
     .footer .logo {

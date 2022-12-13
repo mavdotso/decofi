@@ -1,10 +1,10 @@
 .donation_box {
     font-weight: 600;
     background-color: var(--light-primary);
-    border: 0.15em solid var(--dark-primary);
+    border: 0.15rem solid var(--dark-primary);
     border-radius: var(--card-border-radius);
-    box-shadow: -0.45em 0.45em 0 0 var(--dark-primary);
-    padding: 1.5em 1.8em;
+    box-shadow: -0.45rem 0.45rem 0 0 var(--dark-primary);
+    padding: 1.5rem 1.8rem;
     width: clamp(21rem, 23rem, 25rem);
 }
 
@@ -12,17 +12,17 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding-bottom: 1.5em;
+    padding-bottom: 1.5rem;
 }
 
 .donation_box_header h4 {
-    font-size: 1.5em;
-    margin: 1em 0 1em 1em;
+    font-size: 1.5rem;
+    margin: 1rem 0 1rem 1rem;
 }
 
 .donation_box_image {
-    max-width: 4em;
-    border-radius: 100em;
+    max-width: 4rem;
+    border-radius: 100rem;
 }
 
 .donation_box_choose_donation {
@@ -32,16 +32,16 @@
 }
 
 .donation_coffee_emoji {
-    font-size: 2em;
+    font-size: 2rem;
 }
 
 .donation_radio:last-child {
     text-align: center;
-    height: 3em;
-    width: 3em;
-    border: 0.15em solid var(--dark-primary);
-    border-radius: 2em;
-    box-shadow: -0.1em 0.1em 0 0 var(--dark-primary);
+    height: 3rem;
+    width: 3rem;
+    border: 0.15rem solid var(--dark-primary);
+    border-radius: 2rem;
+    box-shadow: -0.1rem 0.1rem 0 0 var(--dark-primary);
     appearance: inherit;
 }
 
@@ -54,11 +54,11 @@
     text-align: center;
     display: table-cell;
     vertical-align: middle;
-    height: 3em;
-    width: 3em;
-    border: 0.15em solid var(--dark-primary);
-    border-radius: 2em;
-    box-shadow: -0.1em 0.1em 0 0 var(--dark-primary);
+    height: 3rem;
+    width: 3rem;
+    border: 0.15rem solid var(--dark-primary);
+    border-radius: 2rem;
+    box-shadow: -0.1rem 0.1rem 0 0 var(--dark-primary);
 }
 
 .donation_active {
@@ -84,13 +84,9 @@
 
 .donation_field {
     background-color: var(--light-primary);
-    border: 0.15em solid var(--dark-primary);
-    border-radius: 0.5em;
-    box-shadow: -0.15em 0.15em 0 0 var(--dark-primary);
-    margin: 0.5em 0;
-    padding: 1em 0.5em;
-}
-
-@media (max-width: 50em) {
-
+    border: 0.15rem solid var(--dark-primary);
+    border-radius: 0.5rem;
+    box-shadow: -0.15rem 0.15rem 0 0 var(--dark-primary);
+    margin: 0.5rem 0;
+    padding: 1rem 0.5rem;
 }

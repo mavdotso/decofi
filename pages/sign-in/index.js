@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -8,6 +9,9 @@ import buttonStyles from "../../styles/button.module.css";
 import PasswordField from "../../components/passwordInput";
 
 export default function SignIn() {
+    const pageTitle = `Sign in to DeCoFi`;
+    const pageDescription = `Sign in to DeCoFi and make supporting you quick and easy!`;
+
     const router = useRouter();
 
     const [email, setEmail] = useState("");
@@ -34,28 +38,38 @@ export default function SignIn() {
     }
 
     return (
-        <main>
-            <div className="container">
-                <section className="centered create-account">
-                    <h2>Sign In</h2>
-                    <p className="sub-heading"></p>
+        <>
+            <Head>
+                <title>{pageTitle}</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <meta charSet="UTF-8" />
+                <meta name="description" content={pageDescription} key="desc" />
+                <meta name="og:title" content={pageTitle} />
+                <meta name="og:description" content={pageDescription} />
+            </Head>
+            <main>
+                <div className="container">
+                    <section className="centered create-account">
+                        <h2>Sign In</h2>
+                        <p className="sub-heading"></p>
 
-                    <form onSubmit={handleSubmit}>
-                        <div className="input-box">
-                            <input name="email" value={email} placeholder="Email" onChange={handleEmail}></input>
-                        </div>
-                        <PasswordField value={password} onChange={handlePassword} />
-                        {loginError ? <span className="input-tip input-invalid">Login error! Please, try again.</span> : ""}
-                        <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Sign in" />
-                        <p>
-                            Don't have a creator account?{" "}
-                            <Link href={{ pathname: "/sign-up", query: { username: "" } }} as="/sign-up">
-                                Create it here!
-                            </Link>
-                        </p>
-                    </form>
-                </section>
-            </div>
-        </main>
+                        <form onSubmit={handleSubmit}>
+                            <div className="input-box">
+                                <input name="email" value={email} placeholder="Email*" onChange={handleEmail}></input>
+                            </div>
+                            <PasswordField value={password} onChange={handlePassword} />
+                            {loginError ? <span className="input-tip input-invalid">Login error! Please, try again.</span> : ""}
+                            <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Sign in" />
+                            <p>
+                                Don't have a creator account?{" "}
+                                <Link href={{ pathname: "/sign-up", query: { username: "" } }} as="/sign-up">
+                                    Create it here!
+                                </Link>
+                            </p>
+                        </form>
+                    </section>
+                </div>
+            </main>
+        </>
     );
 }

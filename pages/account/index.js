@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useState, useEffect } from "react";
 import { getUser, updateUser } from "../../lib/supabase";
 import { useSession } from "@supabase/auth-helpers-react";
@@ -6,6 +7,9 @@ import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
 
 export default function Account() {
+    const pageTitle = `Your account on DeCoFi`;
+    const pageDescription = `Your account on DeCoFi!`;
+
     const session = useSession();
 
     const [loading, setLoading] = useState(true);
@@ -30,31 +34,48 @@ export default function Account() {
     }, [session]);
 
     return (
-        <main>
-            <div className="container">
-                <section className="centered create-account">
-                    <h2>Welcome back, {username}</h2>
-                    <p className="sub-heading"></p>
-                    <form onSubmit={updateUser}>
-                        <div className="input-box">
-                            Your Email: <input name="email" value={email} placeholder="Email*" onChange={(e) => setEmail(e.target.value)}></input>
-                        </div>
-                        <div className="input-box">
-                            Your Tezos wallet:
-                            <input name="tezosWallet" value={tezosWallet} placeholder="Your Tezos wallet for donations*" onChange={(e) => setTezosWalletl(e.target.value)} autoComplete="off"></input>
-                            <span className="input-tip">Not supporting .tez wallets</span>
-                        </div>
-                        <div className="input-box">
-                            Your Description: <input name="description" value={description} placeholder="Your description" onChange={(e) => setDescription(e.target.value)} autoComplete="off"></input>
-                        </div>
-                        <div className="input-box">
-                            Your Twitter handle:
-                            <input name="twitterAccount" value={twitterAccount} placeholder="Twitter handle" onChange={(e) => setTwitterAccount(e.target.value)} autoComplete="off"></input>
-                        </div>
-                        <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Update" />
-                    </form>
-                </section>
-            </div>
-        </main>
+        <>
+            <Head>
+                <title>{pageTitle}</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+                <meta charSet="UTF-8" />
+                <meta name="description" content={pageDescription} key="desc" />
+                <meta name="og:title" content={pageTitle} />
+                <meta name="og:description" content={pageDescription} />
+            </Head>
+            <main>
+                <div className="container">
+                    <section className="centered create-account">
+                        <h2>Welcome back, {username}</h2>
+                        <p className="sub-heading"></p>
+                        <form onSubmit={updateUser}>
+                            <div className="input-box">
+                                Your Email: <input name="email" value={email} placeholder="Email*" onChange={(e) => setEmail(e.target.value)}></input>
+                            </div>
+                            <div className="input-box">
+                                Your Tezos wallet:
+                                <input
+                                    name="tezosWallet"
+                                    value={tezosWallet}
+                                    placeholder="Your Tezos wallet for donations*"
+                                    onChange={(e) => setTezosWalletl(e.target.value)}
+                                    autoComplete="off"
+                                ></input>
+                                <span className="input-tip">Not supporting .tez wallets</span>
+                            </div>
+                            <div className="input-box">
+                                Your Description:{" "}
+                                <input name="description" value={description} placeholder="Your description" onChange={(e) => setDescription(e.target.value)} autoComplete="off"></input>
+                            </div>
+                            <div className="input-box">
+                                Your Twitter handle:
+                                <input name="twitterAccount" value={twitterAccount} placeholder="Twitter handle" onChange={(e) => setTwitterAccount(e.target.value)} autoComplete="off"></input>
+                            </div>
+                            <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Update" />
+                        </form>
+                    </section>
+                </div>
+            </main>
+        </>
     );
 }
