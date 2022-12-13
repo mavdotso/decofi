@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Link from "next/link";
+import PasswordField from "../../components/passwordInput";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import supabase, { resetPassword } from "../../lib/supabase";
