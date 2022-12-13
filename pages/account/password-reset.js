@@ -1,7 +1,9 @@
 import Head from "next/head";
 import PasswordField from "../../components/passwordInput";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { setNewPassword } from "../../lib/supabase";
+import { useRouter } from "next/router";
+import { useSession } from "@supabase/auth-helpers-react";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
@@ -10,7 +12,16 @@ export default function PasswordReset() {
     const pageTitle = `Reset password to DeCoFi`;
     const pageDescription = `Reset your password`;
 
+    const session = useSession();
+    const router = useRouter();
+
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        if (session === undefined || session === null) {
+            router.push({ pathname: "/sign-in" });
+        }
+    }, []);
 
     function handlePassword(e) {
         setPassword(e.target.value);
@@ -34,7 +45,7 @@ export default function PasswordReset() {
             <main>
                 <div className="container">
                     <section className="centered create-account">
-                        <h2>New password</h2>
+                        <h2>Set a new password</h2>
                         <p className="sub-heading">What would you like your new password to be?</p>
                         <form onSubmit={handleSubmit}>
                             <PasswordField value={password} handlePassword={handlePassword} />

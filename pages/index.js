@@ -98,7 +98,7 @@ export default function Home() {
                             Setup your account, connect your wallet and begin getting payouts in less than 3 minutes.
                         </p>
                     </div>
-                    <DonateBox username="mav" id="1637b044-e667-43b7-9c1d-558bc7b5a448" tezosWalletAddress="tz1VgoYJYn8WCrzSiJzU8akNexYkZxuZghAH" image="mav-mav.jpeg" />
+                    <DonateBox username="mav" id="1637b044-e667-43b7-9c1d-558bc7b5a448" tezosWalletAddress="tz1VgoYJYn8WCrzSiJzU8akNexYkZxuZghAH" imageURL="1637b044-e667-43b7-9c1d-558bc7b5a448.jpeg" />
                 </section>
             </div>
         </main>

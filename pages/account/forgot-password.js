@@ -1,9 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import supabase, { resetPassword } from "../../lib/supabase";
-import { useSession } from "@supabase/auth-helpers-react";
+import { resetPassword } from "../../lib/supabase";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
@@ -11,10 +9,6 @@ import buttonStyles from "../../styles/button.module.css";
 export default function PasswordReset() {
     const pageTitle = `Reset password to DeCoFi`;
     const pageDescription = `Reset your password`;
-
-    const router = useRouter();
-
-    const session = useSession();
 
     const [email, setEmail] = useState("");
 
@@ -48,11 +42,12 @@ export default function PasswordReset() {
                             <div className="input-box">
                                 <input name="email" value={email} placeholder="Email*" onChange={handleEmail}></input>
                             </div>
-                            <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Send a password reset link" />
+                            <Button
+                                className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`}
+                                buttonText="Send a password reset link"
+                            />
                             <p>
-                                <Link href={{ pathname: "/sign-in"}}>
-                                    Back to login
-                                </Link>
+                                <Link href={{ pathname: "/sign-in" }}>Back to login</Link>
                             </p>
                         </form>
                     </section>

@@ -24,7 +24,7 @@ export default function User({ user }) {
                 <div className="full-width">
                     <section className="container flow user-info">
                         <div className="user-picture-holder">
-                            <UserAvatar className="user-picture" username={user.username} image={`${user.username}-${user.image}`} />
+                            <UserAvatar className="user-picture" username={user.username} imageURL={user.imageURL} />
                         </div>
                         <div className="user-description">
                             <h1>{user.username}</h1>
@@ -35,7 +35,7 @@ export default function User({ user }) {
 
                 <section className="container even-columns">
                     <Activity id={user.id} />
-                    <DonateBox username={user.username} id={user.id} tezosWalletAddress={user.tezos_wallet} image={`${user.username}-${user.image}`} />
+                    <DonateBox username={user.username} id={user.id} tezosWalletAddress={user.tezos_wallet} imageURL={user.imageURL} />
                 </section>
             </main>
         </>

@@ -10,7 +10,7 @@ import buttonStyles from "../styles/button.module.css";
 
 import UserAvatar from "./userAvatar";
 
-export default function DonateBox({ username, id, tezosWalletAddress, image }) {
+export default function DonateBox({ username, id, tezosWalletAddress, imageURL }) {
     const wallet = useContext(WalletContext);
 
     const [amount, setAmount] = useState(0);
@@ -59,7 +59,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
     return (
         <div className={styles.donation_box}>
             <span className={styles.donation_box_header}>
-                <UserAvatar className={styles.donation_box_image} username={username} image={image} />
+                <UserAvatar className={styles.donation_box_image} username={username} imageURL={imageURL} />
                 <h4>
                     Buy <span className={styles.donation_box_name}>{username}</span> a coffee
                 </h4>
