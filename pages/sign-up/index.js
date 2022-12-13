@@ -1,15 +1,17 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import convertToSlug, { generateRandomString } from "../../lib/utils";
 import supabase, { signUp, updateUserDetails } from "../../lib/supabase";
+import generateBauPunk from "../../lib/bauPunks";
 import { motion } from "framer-motion";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
 import PasswordField from "../../components/passwordInput";
 import { SUPABASE_STORAGE_AVATARS } from "../../lib/consts";
+
+import { decode } from "base64-arraybuffer";
 
 export default function SignUp({ defaultUsername }) {
     const pageTitle = `Sign up on DeCoFi`;
@@ -84,29 +86,44 @@ export default function SignUp({ defaultUsername }) {
 
     async function handleUpload(e) {
         const avatarFile = e.target.files[0];
-        const imageExtention = avatarFile.type.split('/').pop();
+        const imageExtention = avatarFile.type.split("/").pop();
         const randomString = generateRandomString();
 
         const { data, error } = await supabase.storage
         .from(SUPABASE_STORAGE_AVATARS)
         .upload(`${userID}${randomString}.${imageExtention}`, avatarFile, {
-            cacheControl: '3600',
-            upsert: false
-          });
+            cacheControl: "3600",
+            upsert: true,
+        });
 
         if (data) {
-            setImageURL(userID,randomString,avatarFile.type);
+            setImageURL(userID, randomString, avatarFile.type);
         }
         if (error) {
             console.log(error);
         }
     }
 
+    async function createDefaultAvatar() {
+        const bauPunk = await generateBauPunk();
+        const randomString = generateRandomString();
+
+        const { data, error } = await supabase.storage
+        .from(SUPABASE_STORAGE_AVATARS)
+        .upload(`${userID}${randomString}.jpg`, decode(bauPunk), {
+            contentType: "image/jpg",
+        });
+
+        if (data) return data;
+        if (error) return error;
+    }
+
     async function handleRegistration(e) {
         e.preventDefault();
         const res = await signUp(email, password, username);
 
-        if (res.user !== null) { // Add checking for errors
+        if (res.user !== null) {
+            // Add checking for errors
             setStepTwo(true);
             setUserID(res.user.id);
         }
@@ -114,7 +131,12 @@ export default function SignUp({ defaultUsername }) {
 
     async function handleCompleteProfile(e) {
         e.preventDefault();
-        const res = updateUserDetails(userID, description, tezosWalletAddress, twitterAccount, imageURL);
+
+        if (imageURL === "" || imageURL === null || imageURL === undefined) {
+            await createDefaultAvatar();
+        }
+
+        const res = await updateUserDetails(userID, description, tezosWalletAddress, twitterAccount, imageURL);
     }
 
     return (
@@ -131,7 +153,7 @@ export default function SignUp({ defaultUsername }) {
                 <div className="container">
                     <section className="centered create-account">
                         {!stepTwo ? (
-                            <motion.div key="stepOne" initial={{ opacity: 1 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} >
+                            <motion.div key="stepOne" initial={{ opacity: 1 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                                 <h2>Create your account</h2>
                                 <p className="sub-heading">And begin receiving donations within 3 minutes!</p>
                                 <form onSubmit={handleRegistration}>
@@ -148,7 +170,7 @@ export default function SignUp({ defaultUsername }) {
                                         )}
                                     </div>
                                     <div className="input-box">
-                                        <input name="email" value={email} placeholder="Email*" onChange={handleEmail}></input>
+                                        <input name="email" value={email} placeholder="Email*" onChange={handleEmail} minLength={3}></input>
                                     </div>
                                     <PasswordField value={password} handlePassword={handlePassword} />
                                     <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Next step" />
@@ -181,7 +203,10 @@ export default function SignUp({ defaultUsername }) {
                                         <p></p>
                                         <input type="file" accept="image/png, image/jpeg, image/jpg" name="avatar" onChange={handleUpload}></input>
                                     </div>
-                                    <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Complete registration" />
+                                    <Button
+                                        className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`}
+                                        buttonText="Complete registration"
+                                    />
                                 </form>
                             </motion.div>
                         )}
