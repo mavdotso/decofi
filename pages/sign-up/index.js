@@ -14,7 +14,6 @@ export default function SignUp({ defaultUsername }) {
     const pageDescription = `Create an account on DeCoFi and make supporting you quick and easy!`;
 
     const router = useRouter();
-    // const navigate = useNavigate();
 
     const [username, setUsername] = useState(defaultUsername);
     const [email, setEmail] = useState("");
@@ -25,6 +24,7 @@ export default function SignUp({ defaultUsername }) {
     const [description, setDescription] = useState("");
     const [twitterAccount, setTwitterAccount] = useState("");
     const [imageURL, setImageURL] = useState("");
+    const [userID, setUserID] = useState("");
 
     useEffect(() => {
         if (username === null || username === undefined || username === "") {
@@ -95,8 +95,6 @@ export default function SignUp({ defaultUsername }) {
     async function handleSubmit(e) {
         e.preventDefault();
         await signUp(email, password, username, tezosWalletAddress, description, twitterAccount, imageURL);
-
-        // navigate(`../${username}`, {replace: true});
     }
 
     return (

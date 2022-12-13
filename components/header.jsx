@@ -9,10 +9,12 @@ import { useSession } from '@supabase/auth-helpers-react'
 import { signOut } from "../lib/supabase"
 
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 function Header() {
     const wallet = useContext(WalletContext);
     const session = useSession();
+    const router = useRouter();
 
     const [isActiveWallet, setActiveWallet] = useState();
 
@@ -26,7 +28,7 @@ function Header() {
         }
     }, [wallet]);
 
-    async function handleClick(e) {
+    async function handleSync(e) {
         e.preventDefault();
 
         const account = await checkIfActiveAccount(wallet);
@@ -43,6 +45,11 @@ function Header() {
         }
     }
 
+    async function handleSignOut() {
+        signOut();
+        router.push({ pathname: "/" });
+    }
+
     return (
         <header>
             <div className={styles.menu}>
@@ -55,7 +62,7 @@ function Header() {
                             <Link className={styles.menu_item} href="/account">
                                 Account
                             </Link>
-                            <Link className={styles.menu_item} href="" onClick={ signOut }>
+                            <Link className={styles.menu_item} href="" onClick={ handleSignOut }>
                                 Sign out
                             </Link>
                         </>
@@ -71,13 +78,13 @@ function Header() {
                     )}
                     {isActiveWallet ? (
                         <Button
-                            onClick={handleClick}
+                            onClick={handleSync}
                             className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_small}`}
                             buttonText={"Unsync"}
                         />
                     ) : (
                         <Button
-                            onClick={handleClick}
+                            onClick={handleSync}
                             className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_small}`}
                             buttonText={"Sync"}
                         />

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getUser, updateUserDetails } from "../../lib/supabase";
 import { useSession } from "@supabase/auth-helpers-react";
 
+import UserAvatar from "../../components/userAvatar";
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
 
@@ -16,6 +17,7 @@ export default function Account() {
     const [tezosWallet, setTezosWalletl] = useState();
     const [twitterAccount, setTwitterAccount] = useState();
     const [description, setDescription] = useState();
+    const [image, setImage] = useState();
 
     useEffect(() => {
         const checkActiveUser = async () => {
@@ -25,6 +27,7 @@ export default function Account() {
             setTezosWalletl(user.tezos_wallet);
             setTwitterAccount(user.twitter_account);
             setDescription(user.description);
+            setImage(user.image);
         };
         checkActiveUser();
     }, [session]);
@@ -59,6 +62,7 @@ export default function Account() {
             <main>
                 <div className="container">
                     <section className="centered create-account">
+                    <UserAvatar className="user-picture" username={username} image={`${username}-${image}`} />
                         <h2>Welcome back, {username}</h2>
                         <p className="sub-heading"></p>
                         <form onSubmit={handleSubmit}>
