@@ -12,7 +12,7 @@ export default function PasswordField( { password, handlePassword } ) {
 
     return (
         <div className={ `input-box ${styles.input_password}` }>
-            <input type={showPassword ? "text" : "password"} name="password" value={ password } onChange={ handlePassword} placeholder="Password*" minLength={6}></input>
+            <input type={showPassword ? "text" : "password"} name="password" value={ password } onChange={ handlePassword} placeholder="Password*" minLength={6} required></input>
             <span className={`${styles.show_password_icon}`}  onClick={ togglePassword }>{ showPassword ? <RxEyeOpen /> : <RxEyeClosed />}</span>
         </div>
     );

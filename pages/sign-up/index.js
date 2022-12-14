@@ -21,11 +21,14 @@ export default function SignUp({ defaultUsername }) {
 
     const [stepTwo, setStepTwo] = useState(false);
 
+    const [registrationError, setRegistrationError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [isUsernameAvailable, setIsUsernameAvailable] = useState();
+
     const [username, setUsername] = useState(defaultUsername);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const [isAvailable, setIsAvailable] = useState();
     const [tezosWalletAddress, setTezosWalletAddress] = useState("");
     const [description, setDescription] = useState("");
     const [twitterAccount, setTwitterAccount] = useState("");
@@ -48,9 +51,9 @@ export default function SignUp({ defaultUsername }) {
 
             if (data) {
                 if (data.length === 0) {
-                    setIsAvailable(true);
+                    setIsUsernameAvailable(true);
                 } else {
-                    setIsAvailable(false);
+                    setIsUsernameAvailable(false);
                 }
             }
         }
@@ -60,38 +63,12 @@ export default function SignUp({ defaultUsername }) {
         }
     }, [username]);
 
-    function handleUsernameChange(e) {
-        setUsername(convertToSlug(e.target.value));
-    }
-
-    function handletezosWalletAddressChange(e) {
-        setTezosWalletAddress(e.target.value);
-    }
-
-    function handleDescription(e) {
-        setDescription(e.target.value);
-    }
-
-    function handleTwitterAccount(e) {
-        setTwitterAccount(e.target.value);
-    }
-
-    function handleEmail(e) {
-        setEmail(e.target.value);
-    }
-
-    function handlePassword(e) {
-        setPassword(e.target.value);
-    }
-
     async function handleUpload(e) {
         const avatarFile = e.target.files[0];
         const imageExtention = avatarFile.type.split("/").pop();
         const randomString = generateRandomString();
 
-        const { data, error } = await supabase.storage
-        .from(SUPABASE_STORAGE_AVATARS)
-        .upload(`${userID}${randomString}.${imageExtention}`, avatarFile, {
+        const { data, error } = await supabase.storage.from(SUPABASE_STORAGE_AVATARS).upload(`${userID}${randomString}.${imageExtention}`, avatarFile, {
             cacheControl: "3600",
             upsert: true,
         });
@@ -108,22 +85,38 @@ export default function SignUp({ defaultUsername }) {
         const bauPunk = await generateBauPunk();
         const randomString = generateRandomString();
 
-        const { data, error } = await supabase.storage
-        .from(SUPABASE_STORAGE_AVATARS)
-        .upload(`${userID}${randomString}.jpg`, decode(bauPunk), {
+        const { data, error } = await supabase.storage.from(SUPABASE_STORAGE_AVATARS).upload(`${userID}${randomString}.jpg`, decode(bauPunk), {
             contentType: "image/jpg",
         });
 
-        if (data) return data;
+        if (data) { setImageURL(`${userID}${randomString}.jpg`); return data };
         if (error) return error;
     }
 
-    async function handleRegistration(e) {
-        e.preventDefault();
-        const res = await signUp(email, password, username);
+    // Every time error message is set, change error
+    useEffect(() => {
+        if (errorMessage !== null) {
+            setRegistrationError(true);
+        } else {
+            setRegistrationError(false);
+        }
+    }, [errorMessage]);
 
-        if (res.user !== null) {
-            // Add checking for errors
+    async function checkForInputErrors(e) {
+        e.preventDefault();
+
+        if (!isUsernameAvailable) {
+            setErrorMessage("Username is not available");
+            return;
+        } else {
+            handleRegistration();
+        }
+    }
+
+    async function handleRegistration() {
+        const res = await signUp(email, password, username, setErrorMessage);
+
+        if(errorMessage === null) {
             setStepTwo(true);
             setUserID(res.user.id);
         }
@@ -131,12 +124,10 @@ export default function SignUp({ defaultUsername }) {
 
     async function handleCompleteProfile(e) {
         e.preventDefault();
-
         if (imageURL === "" || imageURL === null || imageURL === undefined) {
             await createDefaultAvatar();
         }
-
-        const res = await updateUserDetails(userID, description, tezosWalletAddress, twitterAccount, imageURL);
+        await updateUserDetails(userID, description, tezosWalletAddress, twitterAccount, imageURL, setErrorMessage);
     }
 
     return (
@@ -156,24 +147,32 @@ export default function SignUp({ defaultUsername }) {
                             <motion.div key="stepOne" initial={{ opacity: 1 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                                 <h2>Create your account</h2>
                                 <p className="sub-heading">And begin receiving donations within 3 minutes!</p>
-                                <form onSubmit={handleRegistration}>
+                                <form onSubmit={checkForInputErrors}>
                                     <div className="input-box">
-                                        <input name="username" value={username} placeholder={username === "" ? "Your username*" : username} onChange={handleUsernameChange} minLength={3}></input>
+                                        <input
+                                            name="username"
+                                            value={username}
+                                            placeholder={username === "" ? "Your username*" : username}
+                                            onChange={(e) => setUsername(convertToSlug(e.target.value))}
+                                            minLength={3}
+                                            required
+                                        ></input>
                                         {username === "" ? (
                                             <span className="input-tip"> </span>
-                                        ) : isAvailable && username.length >= 3 ? (
+                                        ) : isUsernameAvailable && username.length >= 3 ? (
                                             <span className="input-tip input-valid">Username is available</span>
-                                        ) : isAvailable && username.length < 3 ? (
+                                        ) : isUsernameAvailable && username.length < 3 ? (
                                             <span className="input-tip input-invalid">Minimum 3 characters</span>
                                         ) : (
                                             <span className="input-tip input-invalid">Username is not available</span>
                                         )}
                                     </div>
                                     <div className="input-box">
-                                        <input name="email" value={email} placeholder="Email*" onChange={handleEmail} minLength={3}></input>
+                                        <input type="email" name="email" value={email} placeholder="Email*" onChange={(e) => setEmail(e.target.value)} minLength={3} required></input>
                                     </div>
-                                    <PasswordField value={password} handlePassword={handlePassword} />
-                                    <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Next step" />
+                                    <PasswordField value={password} handlePassword={(e) => setPassword(e.target.value)} />
+                                    {errorMessage !== null && <p className="input-tip input-invalid">Error: {errorMessage} </p>}
+                                    <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Create account" />
                                 </form>
                             </motion.div>
                         ) : (
@@ -186,17 +185,17 @@ export default function SignUp({ defaultUsername }) {
                                             name="tezosWalletAddress"
                                             value={tezosWalletAddress}
                                             placeholder="Your Tezos wallet for donations*"
-                                            onChange={handletezosWalletAddressChange}
+                                            onChange={(e) => setTezosWalletAddress(e.target.value)}
                                             autoComplete="off"
                                             required
                                         ></input>
                                         <span className="input-tip">Not supporting .tez wallets</span>
                                     </div>
                                     <div className="input-box">
-                                        <input name="description" value={description} placeholder="Your description" onChange={handleDescription} autoComplete="off"></input>
+                                        <input name="description" value={description} placeholder="Your description" onChange={(e) => setDescription(e.target.value)} autoComplete="off"></input>
                                     </div>
                                     <div className="input-box">
-                                        <input name="twitterAccount" value={twitterAccount} placeholder="Twitter handle" onChange={handleTwitterAccount} autoComplete="off"></input>
+                                        <input name="twitterAccount" value={twitterAccount} placeholder="Twitter handle" onChange={(e) => setTwitterAccount(e.target.value)} autoComplete="off"></input>
                                     </div>
                                     <div className="input-box">
                                         <label htmlFor="avatar">Choose a profile picture:</label>
