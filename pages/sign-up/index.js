@@ -63,6 +63,15 @@ export default function SignUp({ defaultUsername }) {
         }
     }, [username]);
 
+    // Every time error message is set, change error
+    useEffect(() => {
+        if (errorMessage !== null) {
+            setRegistrationError(true);
+        } else {
+            setRegistrationError(false);
+        }
+    }, [errorMessage]);
+
     async function handleUpload(e) {
         const avatarFile = e.target.files[0];
         const imageExtention = avatarFile.type.split("/").pop();
@@ -89,18 +98,12 @@ export default function SignUp({ defaultUsername }) {
             contentType: "image/jpg",
         });
 
-        if (data) { setImageURL(`${userID}${randomString}.jpg`); return data };
+        if (data) {
+            setImageURL(`${userID}${randomString}.jpg`);
+            return data;
+        }
         if (error) return error;
     }
-
-    // Every time error message is set, change error
-    useEffect(() => {
-        if (errorMessage !== null) {
-            setRegistrationError(true);
-        } else {
-            setRegistrationError(false);
-        }
-    }, [errorMessage]);
 
     async function checkForInputErrors(e) {
         e.preventDefault();
@@ -116,7 +119,7 @@ export default function SignUp({ defaultUsername }) {
     async function handleRegistration() {
         const res = await signUp(email, password, username, setErrorMessage);
 
-        if(errorMessage === null) {
+        if (errorMessage === null) {
             setStepTwo(true);
             setUserID(res.user.id);
         }
@@ -126,6 +129,7 @@ export default function SignUp({ defaultUsername }) {
         e.preventDefault();
         if (imageURL === "" || imageURL === null || imageURL === undefined) {
             await createDefaultAvatar();
+            console.log(imageURL);
         }
         await updateUserDetails(userID, description, tezosWalletAddress, twitterAccount, imageURL, setErrorMessage);
     }
@@ -192,7 +196,14 @@ export default function SignUp({ defaultUsername }) {
                                         <span className="input-tip">Not supporting .tez wallets</span>
                                     </div>
                                     <div className="input-box">
-                                        <input name="description" value={description} placeholder="Your description" onChange={(e) => setDescription(e.target.value)} autoComplete="off"></input>
+                                        <textarea
+                                            name="description"
+                                            value={description}
+                                            placeholder="Your description"
+                                            onChange={(e) => setDescription(e.target.value)}
+                                            autoComplete="off"
+                                            rows="3"
+                                        ></textarea>
                                     </div>
                                     <div className="input-box">
                                         <input name="twitterAccount" value={twitterAccount} placeholder="Twitter handle" onChange={(e) => setTwitterAccount(e.target.value)} autoComplete="off"></input>

@@ -10,6 +10,7 @@ import { signOut } from "../lib/supabase"
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
 function Header() {
     const wallet = useContext(WalletContext);
@@ -58,23 +59,23 @@ function Header() {
                 </Link>
                 <div className={styles.menu_buttons}>
                     {session ? (
-                        <>
+                        <motion.span key="loggedIn" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                             <Link className={styles.menu_item} href="/account">
                                 Account
                             </Link>
                             <Link className={styles.menu_item} href="" onClick={ handleSignOut }>
                                 Sign out
                             </Link>
-                        </>
+                        </motion.span>
                     ) : (
-                        <>
+                        <motion.span key="loggedOut" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                             <Link className={styles.menu_item} href="/sign-in">
                                 Sign in
                             </Link>
                             <Link className={styles.menu_item} href={{ pathname: "/sign-up", query: { username: "" } }} as="/sign-up">
                                 Sign up
                             </Link>
-                        </>
+                        </motion.span>
                     )}
                     {isActiveWallet ? (
                         <Button

@@ -5,6 +5,8 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 * {
@@ -151,6 +153,9 @@ input[type="number"] {
 
 textarea {
     resize: none;
+    width: 100%;
+    background-color: var(--light-primary);
+    border: none;
 }
 
 /* SPECIFIC STYLES */

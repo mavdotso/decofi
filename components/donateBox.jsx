@@ -27,15 +27,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, imageURL }
         setRadioValue("");
         setInvalid(false);
     }
-
-    async function handleChangeFrom(e) {
-        setFrom(e.target.value);
-    }
-
-    function handleChangeMessage(e) {
-        setMessage(e.target.value);
-    }
-
+    
     async function processDonation(e) {
         e.preventDefault();
 
@@ -124,14 +116,14 @@ export default function DonateBox({ username, id, tezosWalletAddress, imageURL }
                     </span>
                 </div>
                 <div className={styles.donation_box_message}>
-                    <input className={styles.donation_field} type="text" id="from" name="from" onChange={handleChangeFrom} placeholder="From (optional)" value={from} />
+                    <input className={styles.donation_field} type="text" id="from" name="from" onChange={e => setFrom(e.target.value)} placeholder="From (optional)" value={from} />
                     <textarea
                         className={styles.donation_field}
                         type="textarea"
                         id="message"
                         name="message"
                         value={message}
-                        onChange={handleChangeMessage}
+                        onChange={e => handleChangeMessage}
                         rows="4"
                         placeholder="Your message (optional)"
                     ></textarea>
