@@ -202,7 +202,6 @@ export default function SignUp({ defaultUsername }) {
                                             placeholder="Your description"
                                             onChange={(e) => setDescription(e.target.value)}
                                             autoComplete="off"
-                                            rows="3"
                                         ></textarea>
                                     </div>
                                     <div className="input-box">
