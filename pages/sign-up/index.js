@@ -90,21 +90,6 @@ export default function SignUp({ defaultUsername }) {
         }
     }
 
-    async function createDefaultAvatar() {
-        const bauPunk = await generateBauPunk();
-        const randomString = generateRandomString();
-
-        const { data, error } = await supabase.storage.from(SUPABASE_STORAGE_AVATARS).upload(`${userID}${randomString}.jpg`, decode(bauPunk), {
-            contentType: "image/jpg",
-        });
-
-        if (data) {
-            setImageURL(`${userID}${randomString}.jpg`);
-            return data;
-        }
-        if (error) return error;
-    }
-
     async function checkForInputErrors(e) {
         e.preventDefault();
 
@@ -127,10 +112,6 @@ export default function SignUp({ defaultUsername }) {
 
     async function handleCompleteProfile(e) {
         e.preventDefault();
-        if (imageURL === "" || imageURL === null || imageURL === undefined) {
-            await createDefaultAvatar();
-            console.log(imageURL);
-        }
         await updateUserDetails(userID, description, tezosWalletAddress, twitterAccount, imageURL, setErrorMessage);
     }
 
@@ -208,9 +189,9 @@ export default function SignUp({ defaultUsername }) {
                                         <input name="twitterAccount" value={twitterAccount} placeholder="Twitter handle" onChange={(e) => setTwitterAccount(e.target.value)} autoComplete="off"></input>
                                     </div>
                                     <div className="input-box">
-                                        <label htmlFor="avatar">Choose a profile picture:</label>
+                                        <label htmlFor="avatar">Upload a profile picture*</label>
                                         <p></p>
-                                        <input type="file" accept="image/png, image/jpeg, image/jpg" name="avatar" onChange={handleUpload}></input>
+                                        <input type="file" accept="image/png, image/jpeg, image/jpg" name="avatar" onChange={handleUpload} required></input>
                                     </div>
                                     <Button
                                         className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`}
