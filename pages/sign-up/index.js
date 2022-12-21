@@ -3,15 +3,12 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import convertToSlug, { generateRandomString } from "../../lib/utils";
 import supabase, { signUp, updateUserDetails } from "../../lib/supabase";
-import generateBauPunk from "../../lib/bauPunks";
 import { motion } from "framer-motion";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
 import PasswordField from "../../components/passwordInput";
 import { SUPABASE_STORAGE_AVATARS } from "../../lib/consts";
-
-import { decode } from "base64-arraybuffer";
 
 export default function SignUp({ defaultUsername }) {
     const pageTitle = `Sign up on DeCoFi`;
