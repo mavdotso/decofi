@@ -130,7 +130,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, imageURL }
                     {isInvalid && <p className={styles.input_invalid}> Choose the donation amount </p>}
                     <Button
                         className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`}
-                        buttonText={amount > 0 ? "Buy a coffee! ꜩ " + amount : "Buy a coffee!"}
+                        buttonText={amount > 0 ? <>Buy a coffee! <span className="tezos_sign">ꜩ</span>{amount}</> : "Buy a coffee!"}
                     />
                 </div>
             </form>
