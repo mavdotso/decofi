@@ -10,7 +10,7 @@ import buttonStyles from "../styles/button.module.css";
 
 import UserAvatar from "./userAvatar";
 
-export default function DonateBox({ username, id, tezosWalletAddress, image }) {
+export default function DonateBox({ username, id, tezosWalletAddress, imageURL }) {
     const wallet = useContext(WalletContext);
 
     const [amount, setAmount] = useState(0);
@@ -27,15 +27,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
         setRadioValue("");
         setInvalid(false);
     }
-
-    async function handleChangeFrom(e) {
-        setFrom(e.target.value);
-    }
-
-    function handleChangeMessage(e) {
-        setMessage(e.target.value);
-    }
-
+    
     async function processDonation(e) {
         e.preventDefault();
 
@@ -59,7 +51,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
     return (
         <div className={styles.donation_box}>
             <span className={styles.donation_box_header}>
-                <UserAvatar className={styles.donation_box_image} username={username} image={image} />
+                <UserAvatar className={styles.donation_box_image} username={username} imageURL={imageURL} />
                 <h4>
                     Buy <span className={styles.donation_box_name}>{username}</span> a coffee
                 </h4>
@@ -124,14 +116,14 @@ export default function DonateBox({ username, id, tezosWalletAddress, image }) {
                     </span>
                 </div>
                 <div className={styles.donation_box_message}>
-                    <input className={styles.donation_field} type="text" id="from" name="from" onChange={handleChangeFrom} placeholder="From (optional)" value={from} />
+                    <input className={styles.donation_field} type="text" id="from" name="from" onChange={e => setFrom(e.target.value)} placeholder="From (optional)" value={from} />
                     <textarea
                         className={styles.donation_field}
                         type="textarea"
                         id="message"
                         name="message"
                         value={message}
-                        onChange={handleChangeMessage}
+                        onChange={e => handleChangeMessage}
                         rows="4"
                         placeholder="Your message (optional)"
                     ></textarea>

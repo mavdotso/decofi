@@ -1,5 +1,5 @@
-import "../styles/index.css";
 import "../styles/normalize.css";
+import "../styles/index.css";
 
 import Layout from "../components/Layout/layout";
 

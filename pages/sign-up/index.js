@@ -1,13 +1,14 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import convertToSlug from "../../lib/utils";
-import supabase, { signUp } from "../../lib/supabase";
+import convertToSlug, { generateRandomString } from "../../lib/utils";
+import supabase, { signUp, updateUserDetails } from "../../lib/supabase";
+import { motion } from "framer-motion";
 
 import Button from "../../components/button";
 import buttonStyles from "../../styles/button.module.css";
 import PasswordField from "../../components/passwordInput";
+import { SUPABASE_STORAGE_AVATARS } from "../../lib/consts";
 
 export default function SignUp({ defaultUsername }) {
     const pageTitle = `Sign up on DeCoFi`;
@@ -15,11 +16,17 @@ export default function SignUp({ defaultUsername }) {
 
     const router = useRouter();
 
+    const [stepTwo, setStepTwo] = useState(false);
+    const [success, setSuccess] = useState(false);
+
+    const [registrationError, setRegistrationError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [isUsernameAvailable, setIsUsernameAvailable] = useState();
+
     const [username, setUsername] = useState(defaultUsername);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const [isAvailable, setIsAvailable] = useState();
     const [tezosWalletAddress, setTezosWalletAddress] = useState("");
     const [description, setDescription] = useState("");
     const [twitterAccount, setTwitterAccount] = useState("");
@@ -42,9 +49,9 @@ export default function SignUp({ defaultUsername }) {
 
             if (data) {
                 if (data.length === 0) {
-                    setIsAvailable(true);
+                    setIsUsernameAvailable(true);
                 } else {
-                    setIsAvailable(false);
+                    setIsUsernameAvailable(false);
                 }
             }
         }
@@ -54,47 +61,57 @@ export default function SignUp({ defaultUsername }) {
         }
     }, [username]);
 
-    function handleUsernameChange(e) {
-        setUsername(convertToSlug(e.target.value));
-    }
-
-    function handletezosWalletAddressChange(e) {
-        setTezosWalletAddress(e.target.value);
-    }
-
-    function handleDescription(e) {
-        setDescription(e.target.value);
-    }
-
-    function handleTwitterAccount(e) {
-        setTwitterAccount(e.target.value);
-    }
-
-    function handleEmail(e) {
-        setEmail(e.target.value);
-    }
-
-    function handlePassword(e) {
-        setPassword(e.target.value);
-    }
+    // Every time error message is set, change error
+    useEffect(() => {
+        if (errorMessage !== null) {
+            setRegistrationError(true);
+        } else {
+            setRegistrationError(false);
+        }
+    }, [errorMessage]);
 
     async function handleUpload(e) {
         const avatarFile = e.target.files[0];
-        setImageURL(avatarFile.name);
+        const imageExtention = avatarFile.type.split("/").pop();
+        const randomString = generateRandomString();
 
-        const { data, error } = await supabase.storage.from("avatars").upload(`${username}-${avatarFile.name}`, avatarFile);
+        const { data, error } = await supabase.storage.from(SUPABASE_STORAGE_AVATARS).upload(`${userID}${randomString}.${imageExtention}`, avatarFile, {
+            cacheControl: "3600",
+            upsert: true,
+        });
 
-        if (data) {
-            console.log(data);
-        }
-        if (error) {
-            console.log(error);
+        if (data) { setImageURL(`${userID}${randomString}.${imageExtention}`) }
+        if (error) { console.log(error) }
+    }
+
+    async function checkForInputErrors(e) {
+        e.preventDefault();
+
+        if (!isUsernameAvailable) {
+            setErrorMessage("Username is not available");
+            return;
+        } else {
+            handleRegistration();
         }
     }
 
-    async function handleSubmit(e) {
+    async function handleRegistration() {
+        const res = await signUp(email, password, username, setErrorMessage);
+
+        if (errorMessage === null) {
+            setStepTwo(true);
+            setUserID(res.user.id);
+        } else { console.log( errorMessage ) }
+    }
+
+    async function handleCompleteProfile(e) {
         e.preventDefault();
-        await signUp(email, password, username, tezosWalletAddress, description, twitterAccount, imageURL);
+        await updateUserDetails(userID, description, tezosWalletAddress, twitterAccount, imageURL, setErrorMessage);
+        setSuccess(true);
+        router.push({ 
+            pathname: '/[username]', 
+            query: { username: `${username}`} 
+        });
     }
 
     return (
@@ -110,51 +127,79 @@ export default function SignUp({ defaultUsername }) {
             <main>
                 <div className="container">
                     <section className="centered create-account">
-                        <h2>Create your account</h2>
-                        <p className="sub-heading">And begin receiving donations within 3 minutes!</p>
-                        <form onSubmit={handleSubmit}>
-                            <div className="input-box">
-                                <input name="username" value={username} placeholder={username === "" ? "Your username*" : username} onChange={handleUsernameChange} minLength={3}></input>
-                                {username === "" ? (
-                                    <span className="input-tip"> </span>
-                                ) : isAvailable && username.length >= 3 ? (
-                                    <span className="input-tip input-valid">Username is available</span>
-                                ) : isAvailable && username.length < 3 ? (
-                                    <span className="input-tip input-invalid">Minimum 3 characters</span>
-                                ) : (
-                                    <span className="input-tip input-invalid">Username is not available</span>
-                                )}
-                            </div>
-                            <div className="input-box">
-                                <input name="email" value={email} placeholder="Email*" onChange={handleEmail}></input>
-                            </div>
-                            <PasswordField value={password} handlePassword={handlePassword} />
-                            <div className="input-box">
-                                <input
-                                    name="tezosWalletAddress"
-                                    value={tezosWalletAddress}
-                                    placeholder="Your Tezos wallet for donations*"
-                                    onChange={handletezosWalletAddressChange}
-                                    autoComplete="off"
-                                ></input>
-                                <span className="input-tip">Not supporting .tez wallets</span>
-                            </div>
-                            <div className="input-box">
-                                <input name="description" value={description} placeholder="Your description" onChange={handleDescription} autoComplete="off"></input>
-                            </div>
-                            <div className="input-box">
-                                <input name="twitterAccount" value={twitterAccount} placeholder="Twitter handle" onChange={handleTwitterAccount} autoComplete="off"></input>
-                            </div>
-                            <div className="input-box">
-                                <label htmlFor="avatar">Choose a profile picture:</label>
-                                <p></p>
-                                <input type="file" name="avatar" onChange={handleUpload}></input>
-                            </div>
-                            <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Register" />
-                            <p>
-                                Already have an account? <Link href={{ pathname: "/sign-in" }}>Sign in here!</Link>
-                            </p>
-                        </form>
+                        {!stepTwo ? (
+                            <motion.div key="stepOne" initial={{ opacity: 1 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                <h2>Create your account</h2>
+                                <p className="sub-heading">And begin receiving donations within 3 minutes!</p>
+                                <form onSubmit={checkForInputErrors}>
+                                    <div className="input-box">
+                                        <input
+                                            name="username"
+                                            value={username}
+                                            placeholder={username === "" ? "Your username*" : username}
+                                            onChange={(e) => setUsername(convertToSlug(e.target.value))}
+                                            minLength={3}
+                                            required
+                                        ></input>
+                                        {username === "" ? (
+                                            <span className="input-tip"> </span>
+                                        ) : isUsernameAvailable && username.length >= 3 ? (
+                                            <span className="input-tip input-valid">Username is available</span>
+                                        ) : isUsernameAvailable && username.length < 3 ? (
+                                            <span className="input-tip input-invalid">Minimum 3 characters</span>
+                                        ) : (
+                                            <span className="input-tip input-invalid">Username is not available</span>
+                                        )}
+                                    </div>
+                                    <div className="input-box">
+                                        <input type="email" name="email" value={email} placeholder="Email*" onChange={(e) => setEmail(e.target.value)} minLength={3} required></input>
+                                    </div>
+                                    <PasswordField value={password} handlePassword={(e) => setPassword(e.target.value)} />
+                                    { errorMessage !== null && <p className="input-tip input-invalid">Error: {errorMessage} </p> }
+                                    <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Create account" />
+                                </form>
+                            </motion.div>
+                        ) : (
+                            <motion.div key="stepTwo" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                <h2>Complete your account</h2>
+                                <p className="sub-heading">Fill in your account details</p>
+                                <form onSubmit={handleCompleteProfile}>
+                                    <div className="input-box">
+                                        <input
+                                            name="tezosWalletAddress"
+                                            value={tezosWalletAddress}
+                                            placeholder="Your Tezos wallet for donations*"
+                                            onChange={(e) => setTezosWalletAddress(e.target.value)}
+                                            autoComplete="off"
+                                            required
+                                        ></input>
+                                        <span className="input-tip">Not supporting .tez wallets</span>
+                                    </div>
+                                    <div className="input-box">
+                                        <textarea
+                                            name="description"
+                                            value={description}
+                                            placeholder="Your description"
+                                            onChange={(e) => setDescription(e.target.value)}
+                                            autoComplete="off"
+                                        ></textarea>
+                                    </div>
+                                    <div className="input-box">
+                                        <input name="twitterAccount" value={twitterAccount} placeholder="Twitter handle" onChange={(e) => setTwitterAccount(e.target.value)} autoComplete="off"></input>
+                                    </div>
+                                    <div className="input-box">
+                                        <label htmlFor="avatar">Upload a profile picture*</label>
+                                        <p></p>
+                                        <input type="file" accept="image/png, image/jpeg, image/jpg" name="avatar" onChange={handleUpload} required></input>
+                                    </div>
+                                    { success && <p className="input-tip input-valid"> Success! Redirecting to your account... </p> }
+                                    <Button
+                                        className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`}
+                                        buttonText="Complete registration"
+                                    />
+                                </form>
+                            </motion.div>
+                        )}
                     </section>
                 </div>
             </main>

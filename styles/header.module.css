@@ -21,8 +21,11 @@
 
 @media (max-width: 50em) {
     .menu {
-        margin: 1.5rem 1rem;
-        justify-content: center;
-        row-gap: 2rem;
+        margin: 1rem;
+        justify-content: space-between;
+        row-gap: 1rem;
+    }
+    .menu_item {
+        display: none;
     }
 }
