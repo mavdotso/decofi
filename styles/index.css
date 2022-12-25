@@ -38,14 +38,23 @@ video {
 }
 
 /* GENERAL STYLING */
+html {
+    height: 100%;
+}
+
 body {
-    min-height: 100vh;
+    min-height: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--light-primary);
     font-family: "Work Sans", sans-serif;
     display: flex;
     flex-direction: column;
+}
+
+footer {
+    margin-top: auto;
+
 }
 
 h1,
@@ -276,7 +285,7 @@ section {
 /* USER PAGE */
 .user-info {
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 2fr 2fr;
     gap: 3rem;
 }
 
@@ -286,6 +295,7 @@ section {
     max-width: 12.5rem;
     max-height: 12.5rem;
     aspect-ratio: 1/1;
+    float: right;
 }
 
 .user-description {
@@ -315,17 +325,24 @@ section {
     }
     .user-info {
         grid-template-columns: 1fr;
-        gap: 1rem;
         align-items: center;
         justify-content: center;
         text-align: center;
+        gap: 0;
     }
+
+    .user-description {
+        margin: 0;
+    }
+
     .user-info img {
         max-width: 150px;
         display: block;
-        margin: auto;
+        margin: 0 auto;
         width: 50%;
+        float: none;
     }
+
     section {
         padding: 2rem 0;
     }

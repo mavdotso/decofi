@@ -17,6 +17,7 @@ export default function SignUp({ defaultUsername }) {
     const router = useRouter();
 
     const [stepTwo, setStepTwo] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     const [registrationError, setRegistrationError] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -79,12 +80,8 @@ export default function SignUp({ defaultUsername }) {
             upsert: true,
         });
 
-        if (data) {
-            setImageURL(userID, randomString, avatarFile.type);
-        }
-        if (error) {
-            console.log(error);
-        }
+        if (data) { setImageURL(`${userID}${randomString}.${imageExtention}`) }
+        if (error) { console.log(error) }
     }
 
     async function checkForInputErrors(e) {
@@ -104,12 +101,17 @@ export default function SignUp({ defaultUsername }) {
         if (errorMessage === null) {
             setStepTwo(true);
             setUserID(res.user.id);
-        }
+        } else { console.log( errorMessage ) }
     }
 
     async function handleCompleteProfile(e) {
         e.preventDefault();
         await updateUserDetails(userID, description, tezosWalletAddress, twitterAccount, imageURL, setErrorMessage);
+        setSuccess(true);
+        router.push({ 
+            pathname: '/[username]', 
+            query: { username: `${username}`} 
+        });
     }
 
     return (
@@ -153,7 +155,7 @@ export default function SignUp({ defaultUsername }) {
                                         <input type="email" name="email" value={email} placeholder="Email*" onChange={(e) => setEmail(e.target.value)} minLength={3} required></input>
                                     </div>
                                     <PasswordField value={password} handlePassword={(e) => setPassword(e.target.value)} />
-                                    {errorMessage !== null && <p className="input-tip input-invalid">Error: {errorMessage} </p>}
+                                    { errorMessage !== null && <p className="input-tip input-invalid">Error: {errorMessage} </p> }
                                     <Button className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`} buttonText="Create account" />
                                 </form>
                             </motion.div>
@@ -190,6 +192,7 @@ export default function SignUp({ defaultUsername }) {
                                         <p></p>
                                         <input type="file" accept="image/png, image/jpeg, image/jpg" name="avatar" onChange={handleUpload} required></input>
                                     </div>
+                                    { success && <p className="input-tip input-valid"> Success! Redirecting to your account... </p> }
                                     <Button
                                         className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`}
                                         buttonText="Complete registration"
