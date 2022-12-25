@@ -37,7 +37,7 @@ export default function Home() {
                 <h1>
                     Buy me a coffee on blockchain <sup className="tezos_sign">ꜩ</sup>{" "}
                 </h1>
-                <p className="sub-heading">Receive tips and donations from your fans and followers direclty to your web3 wallet.</p>
+                <p className="sub-heading">Receive tips and donations from your fans and followers directly to your web3 wallet.</p>
 
                 <form className="claim-username-form">
                     <div className="input-box">
