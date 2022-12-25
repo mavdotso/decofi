@@ -33,7 +33,7 @@ export default function SignIn() {
         if (res.session === null) {
             setLoginError(true);
         } else {
-            router.push({ pathname: "/account" });
+            router.push({ pathname: "/[username]", query: {username: `${res.session.user.user_metadata.username}`} });
         }
     }
 

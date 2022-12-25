@@ -60,8 +60,11 @@ function Header() {
                 <div className={styles.menu_buttons}>
                     {session ? (
                         <motion.span key="loggedIn" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                            <Link className={styles.menu_item} href="/account">
+                            <Link className={styles.menu_item} href={`/${session.user.user_metadata.username}`}>
                                 Account
+                            </Link>
+                            <Link className={styles.menu_item} href="/account/edit">
+                                Edit account
                             </Link>
                             <Link className={styles.menu_item} href="" onClick={ handleSignOut }>
                                 Sign out
