@@ -330,11 +330,9 @@ section {
         text-align: center;
         gap: 0;
     }
-
     .user-description {
         margin: 0;
     }
-
     .user-info img {
         max-width: 150px;
         display: block;
