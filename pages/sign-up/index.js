@@ -74,14 +74,13 @@ export default function SignUp({ defaultUsername }) {
         const avatarFile = e.target.files[0];
         const imageExtention = avatarFile.type.split("/").pop();
         const randomString = generateRandomString();
+        const newImageURL = `${userID}${randomString}.${imageExtention}`;
+        setImageURL(newImageURL);
 
-        const { data, error } = await supabase.storage.from(SUPABASE_STORAGE_AVATARS).upload(`${userID}${randomString}.${imageExtention}`, avatarFile, {
+        const { data, error } = await supabase.storage.from(SUPABASE_STORAGE_AVATARS).upload(newImageURL, avatarFile, {
             cacheControl: "3600",
             upsert: true,
         });
-
-        if (data) { setImageURL(`${userID}${randomString}.${imageExtention}`) }
-        if (error) { console.log(error) }
     }
 
     async function checkForInputErrors(e) {
