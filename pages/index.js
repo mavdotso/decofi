@@ -30,10 +30,12 @@ export default function Home() {
             <meta charSet="UTF-8" />
             <meta name="description" content="Make supporting you quick and easy" key="desc" />
             <meta name="og:title" content="DeCoFi — make supporting you quick and easy" />
+            <meta name="og:url" content="https://decofi.xyz/" />
             <meta name="og:description" content="Make supporting you quick and easy" />
 
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:site" content="@decofi_xyz" />
+            <meta name="twitter:creator" content="@0xMav" />
             <meta name="twitter:title" content="DeCoFi — make supporting you quick and easy" />
             <meta name="twitter:description" content="Make supporting you quick and easy" />
             {/* <meta name="twitter:image" content="URL_FOR_YOUR_IMAGE" /> */}
