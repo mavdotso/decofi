@@ -47,14 +47,14 @@ export async function getStaticPaths() {
     const { data, error } = await supabase.from(SUPABASE_DB_NAME_USERS).select("*");
     const paths = data.map((user) => {
         return {
-            params: { username: user.username.toString() },
-            revalidate: 1
+            params: { username: user.username.toString() }
         };
     });
 
     return {
         paths: paths,
         fallback: false,
+        revalidate: 1
     };
 }
 
