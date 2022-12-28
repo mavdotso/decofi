@@ -48,6 +48,7 @@ export async function getStaticPaths() {
     const paths = data.map((user) => {
         return {
             params: { username: user.username.toString() },
+            revalidate: 1
         };
     });
 
@@ -64,5 +65,6 @@ export async function getStaticProps(context) {
 
     return {
         props: { user: data },
+        revalidate: 1
     };
 }
