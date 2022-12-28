@@ -110,11 +110,11 @@ export default function SignUp({ defaultUsername }) {
         
         if(!registrationError) {
             setSuccess(true);
-            redirectToAccount(username);
+            redirectToAccount();
         }
     }
 
-    async function redirectToAccount(username) {
+    async function redirectToAccount() {
         router.push({ 
             pathname: '/[username]', 
             query: { username: `${username}`} 
