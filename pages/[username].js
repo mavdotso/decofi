@@ -2,7 +2,6 @@ import Head from "next/head";
 import Activity from "../components/activity";
 import DonateBox from "../components/donateBox";
 import UserAvatar from "../components/userAvatar";
-import Link from "next/link";
 
 import supabase from "../lib/supabase.js";
 import { SUPABASE_DB_NAME_USERS } from "../lib/consts";
@@ -54,7 +53,6 @@ export async function getStaticPaths() {
     return {
         paths: paths,
         fallback: false,
-        revalidate: 1
     };
 }
 

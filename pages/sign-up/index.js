@@ -107,7 +107,14 @@ export default function SignUp({ defaultUsername }) {
     async function handleCompleteProfile(e) {
         e.preventDefault();
         await updateUserDetails(userID, description, tezosWalletAddress, twitterAccount, imageURL, setErrorMessage);
-        setSuccess(true);
+        
+        if(!registrationError) {
+            setSuccess(true);
+            redirectToAccount(username);
+        }
+    }
+
+    async function redirectToAccount(username) {
         router.push({ 
             pathname: '/[username]', 
             query: { username: `${username}`} 
