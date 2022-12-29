@@ -52,11 +52,8 @@ export default function DonateBox({ username, id, tezosWalletAddress, imageURL }
         <div className={styles.donation_box}>
             <span className={styles.donation_box_header}>
                 <UserAvatar className={styles.donation_box_image} username={username} imageURL={imageURL} />
-                <h4>
-                    Buy <span className={styles.donation_box_name}>{username}</span> a coffee
-                </h4>
+                <h4> Buy <span className={styles.donation_box_name}>{username}</span> a coffee </h4>
             </span>
-
             <form className={styles.donate_form} onSubmit={processDonation}>
                 <div className={styles.donation_box_choose_donation}>
                     <span className={styles.donation_coffee_emoji}> ☕️ </span>
@@ -115,6 +112,8 @@ export default function DonateBox({ username, id, tezosWalletAddress, imageURL }
                         <input onChange={calculateAmount} name="donation-size-custom" className={styles.donation_radio} id="donation-custom" type="number" placeholder="25" value={inputValue}></input>
                     </span>
                 </div>
+            <p className="input-tip"> Choose the donation amount in <span className="tezos_sign">ꜩ</span> or input a custom value <span className="tezos_sign">&#8593;</span></p>
+
                 <div className={styles.donation_box_message}>
                     <input className={styles.donation_field} type="text" id="from" name="from" onChange={e => setFrom(e.target.value)} placeholder="From (optional)" value={from} />
                     <textarea
@@ -127,7 +126,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, imageURL }
                         rows="4"
                         placeholder="Your message (optional)"
                     ></textarea>
-                    {isInvalid && <p className={styles.input_invalid}> Choose the donation amount </p>}
+                    {isInvalid && <p className="input-tip input-invalid"> Choose the donation amount </p>}
                     <Button
                         className={`${buttonStyles.button} ${buttonStyles.button_primary} ${buttonStyles.button_dark} ${buttonStyles.button_large}`}
                         buttonText={amount > 0 ? <>Buy a coffee! <span className="tezos_sign">ꜩ</span>{amount}</> : "Buy a coffee!"}
