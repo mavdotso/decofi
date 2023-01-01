@@ -112,7 +112,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, imageURL }
                         <input onChange={calculateAmount} name="donation-size-custom" className={styles.donation_radio} id="donation-custom" type="number" placeholder="25" value={inputValue}></input>
                     </span>
                 </div>
-            <p className="input-tip"> Choose the donation amount in <span className="tezos_sign">ꜩ</span> or input a custom value <span className="tezos_sign">&#8593;</span></p>
+            <p className="input-tip">Choose the donation amount in <span className="tezos_sign">ꜩ</span> or input a custom value <span className="tezos_sign">&#8593;</span></p>
 
                 <div className={styles.donation_box_message}>
                     <input className={styles.donation_field} type="text" id="from" name="from" onChange={e => setFrom(e.target.value)} placeholder="From (optional)" value={from} />
@@ -122,7 +122,7 @@ export default function DonateBox({ username, id, tezosWalletAddress, imageURL }
                         id="message"
                         name="message"
                         value={message}
-                        onChange={e => handleChangeMessage}
+                        onChange={e => setMessage(e.target.value)}
                         rows="4"
                         placeholder="Your message (optional)"
                     ></textarea>
